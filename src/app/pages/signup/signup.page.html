@@ -1,0 +1,88 @@
+<ion-content class="ion-padding">
+  <div class="container">
+    
+    <!-- Header Section -->
+    <div class="header-section">
+      <h1 class="title">SOVEREIGN</h1>
+      <p class="subtitle">Create your vault</p>
+      <p class="description">Start your journey with Sovereign Wealth.</p>
+    </div>
+
+    <!-- Form Section -->
+    <form  #signUpForm="ngForm">
+      
+      <!-- First Name Field -->
+      <div class="input-group">
+        <ion-label position="stacked" class="input-label">First Name</ion-label>
+        <ion-input
+          type="text"
+          
+          name="firstName"
+          required
+          placeholder="Alexander"
+          class="custom-input"
+        ></ion-input>
+      </div>
+
+      <!-- Pseudo/Username Field -->
+      <div class="input-group">
+        <ion-label position="stacked" class="input-label">Pseudo (Username)</ion-label>
+        <ion-input
+          type="text"
+       
+          name="pseudo"
+          required
+          placeholder="alex_vault_01"
+          class="custom-input"
+        ></ion-input>
+      </div>
+
+      <!-- Password Field -->
+      <div class="input-group">
+        <ion-label position="stacked" class="input-label">Password</ion-label>
+        <ion-input
+          type="password"
+         
+          name="password"
+          required
+          minlength="12"
+          placeholder="***********"
+          class="custom-input"
+        ></ion-input>
+        <div class="password-hint">
+          Must be at least 12 characters with a symbol.
+        </div>
+      </div>
+
+      <!-- Sign Up Button -->
+      <ion-button
+        type="submit"
+        expand="block"
+        class="signup-button"
+        
+      >
+        Sign Up
+        <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+
+    </form>
+
+    <!-- Footer Section -->
+    <div class="footer-section">
+      <div class="secure-badge">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <span>SECURE HANDSHAKE</span>
+      </div>
+      
+      <div class="login-link">
+        <span>Already have an account?</span>
+        <ion-text color="primary" (click)="goToLogin()">Log in</ion-text>
+      </div>
+
+      <div class="encryption-note">
+        END-TO-END ENCRYPTED SESSION
+      </div>
+    </div>
+
+  </div>
+</ion-content>

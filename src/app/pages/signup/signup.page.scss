@@ -1,0 +1,201 @@
+// Variables for consistent styling
+$primary-color: #2dd36f;
+$dark-bg: #0a0a0a;
+$card-bg: #1a1a1a;
+$text-muted: #888888;
+
+ion-content {
+  --background: #000000;
+  --color: #ffffff;
+}
+
+.container {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 20px;
+}
+
+// ========== HEADER SECTION ==========
+.header-section {
+  text-align: center;
+  margin-bottom: 50px;
+  
+  .title {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #ffffff 0%, $primary-color 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  
+  .subtitle {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #ffffff;
+  }
+  
+  .description {
+    font-size: 14px;
+    color: $text-muted;
+  }
+}
+
+// ========== FORM SECTION ==========
+.input-group {
+  margin-bottom: 25px;
+  
+  .input-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: $text-muted;
+    margin-bottom: 8px;
+  }
+  
+  .custom-input {
+    --background: $card-bg;
+    --color: #ffffff;
+    --border-radius: 8px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    margin-top: 5px;
+    
+    --highlight-color-focused: $primary-color;
+    --highlight-color-valid: $primary-color;
+    
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    
+    &:focus-within {
+      border-color: $primary-color;
+    }
+  }
+  
+  .password-hint {
+    font-size: 10px;
+    color: $text-muted;
+    margin-top: 8px;
+    padding-left: 5px;
+  }
+}
+
+// ========== SIGN UP BUTTON ==========
+.signup-button {
+  --background: $primary-color;
+  --background-hover: #2dc06a;
+  --border-radius: 30px;
+  --padding-top: 24px;
+  --padding-bottom: 24px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  --box-shadow: 0 4px 15px rgba(45, 211, 111, 0.3);
+  
+  ion-icon {
+    font-size: 20px;
+  }
+  
+  &:hover {
+    --box-shadow: 0 6px 20px rgba(45, 211, 111, 0.4);
+  }
+  
+  &:disabled {
+    --background: #444444;
+    --box-shadow: none;
+    opacity: 0.6;
+  }
+}
+
+// ========== FOOTER SECTION ==========
+.footer-section {
+  text-align: center;
+  margin-top: 40px;
+  
+  .secure-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    
+    ion-icon {
+      color: $primary-color;
+      font-size: 16px;
+    }
+    
+    span {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: $text-muted;
+    }
+  }
+  
+  .login-link {
+    margin-bottom: 15px;
+    
+    span {
+      color: $text-muted;
+      margin-right: 8px;
+    }
+    
+    ion-text {
+      font-weight: 600;
+      cursor: pointer;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  .encryption-note {
+    font-size: 9px;
+    color: $text-muted;
+    letter-spacing: 1px;
+    opacity: 0.6;
+  }
+}
+
+// ========== ANIMATIONS ==========
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container > * {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.input-group:nth-child(1) { animation-delay: 0.1s; }
+.input-group:nth-child(2) { animation-delay: 0.2s; }
+.input-group:nth-child(3) { animation-delay: 0.3s; }
+.signup-button { animation-delay: 0.4s; }
+.footer-section { animation-delay: 0.5s; }
+
+// ========== RESPONSIVE ==========
+@media (min-width: 768px) {
+  .container {
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}

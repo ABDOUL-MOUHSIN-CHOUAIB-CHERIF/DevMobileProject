@@ -1,0 +1,18 @@
+:root {
+  --ion-color-primary: #000666;
+  --ion-color-primary-rgb: 0, 6, 102;
+  --ion-color-primary-contrast: #ffffff;
+  
+  --ion-color-secondary: #006e2a;
+  --ion-color-secondary-contrast: #ffffff;
+
+  /* Custom Sovereign Gradients */
+  --liquid-ink: linear-gradient(135deg, #000666 0%, #1a237e 100%);
+  --glass-effect: rgba(255, 255, 255, 0.7);
+}
+
+.liquid-button {
+  --background: var(--liquid-ink);
+  --border-radius: 12px;
+  font-weight: 700;
+}

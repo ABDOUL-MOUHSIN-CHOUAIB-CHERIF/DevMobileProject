@@ -1,0 +1,72 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>
+      <div class="flex-items-center">
+        <ion-icon name="wallet-outline" color="primary"></ion-icon>
+        <span class="brand-text">Sovereign</span>
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" fill="clear">Login</ion-button>
+      <ion-button class="liquid-button" fill="solid">Get Started</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="hero-container">
+    <div class="hero-content">
+      <ion-badge color="secondary" mode="ios" class="ion-margin-bottom">
+        THE DIGITAL PRIVATE BANK
+      </ion-badge>
+      <h1>Master Your Portfolio with <span class="accent-text">AI-Driven</span> Precision</h1>
+      <p>Experience the evolution of wealth management with sophisticated intelligence.</p>
+      
+      <div class="button-group">
+        <ion-button class="liquid-button" (onclick)="goToRegister" size="large">Get Started</ion-button>
+        <ion-button fill="outline" size="large" (onclick)="goToLogin" color="primary">Login</ion-button>
+      </div>
+    </div>
+
+    <div class="image-wrapper">
+      <!-- <img src="assets/images/finance-interface.jpg" alt="Portfolio Growth"> -->
+      <div class="floating-insight">
+        <!-- <ion-item lines="none">
+          <ion-icon slot="start" name="trending-up" color="secondary"></ion-icon>
+          <ion-label>
+            <p class="p1" >Portfolio Growth</p>
+            <h2>+12.4%</h2>
+          </ion-label>
+        </ion-item> -->
+      </div>
+    </div>
+  </div>
+
+  <section class="features">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="4">
+          <div class="feature-card">
+            <ion-icon name="analytics-outline"></ion-icon>
+            <h3>AI Analytics</h3>
+            <p>Identify non-obvious correlations in your portfolio.</p>
+          </div>
+        </ion-col>
+        <ion-col size="12" size-md="4">
+          <div class="feature-card">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <h3>Secure Storage</h3>
+            <p>Bank-grade encryption for your financial data.</p>
+          </div>
+        </ion-col>
+        <ion-col size="12" size-md="4">
+          <div class="feature-card">
+            <ion-icon name="flash-outline"></ion-icon>
+            <h3>Real-time Sync</h3>
+            <p>Instant updates across all your devices.</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+</ion-content>
