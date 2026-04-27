@@ -1,0 +1,7 @@
+{
+  "name": "EXPENSE_TRACKER",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
