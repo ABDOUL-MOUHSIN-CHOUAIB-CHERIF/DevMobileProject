@@ -1,53 +1,171 @@
-// Layout styles
-.hero-container {
-  padding: 80px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.brand-text{
+  color: rgb(68, 135, 222);
+  font-size: 25px;
+}
+
+ion-header ion-button{
+   margin-right: 10px;
+   --border-radius: 10px;
+  --color:white;
+  --background:rgb(45, 10, 188);
+}
+.header {
+  --background: transparent !important;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+ion-content {
+  --padding-top: 56px !important;
+}
+.icon1{
+  color:rgb(0, 123, 255) !important;
+  font-size: 25px;
+  margin-right: 8px;
+  margin-top: 8px;
+}
+.hero-container{
   text-align: center;
-  background: var(--ion-color-step-50);
+  padding: 10px 20px;
+  background-color: rgba(243, 240, 240, 0.842);
+  padding-bottom: 20px;
+}
+.ion-margin-bottom{
+  margin-top: 40px;
+  margin-right: 130px;
+  font-size: 18px;
+  padding: 5px 8px;
+}
+.hero-content h1{
+  color: rgb(11, 36, 133);
+  font-size: 50px;
+  text-align: left;
+}
+.accent-text{
+  color: rgb(119, 210, 210);
+
 }
 
-.brand-text {
-  font-weight: 600;
-  margin-left: 8px;
+.hero-content p{
+  text-align: center;
+  font-size: 23px;
+}
+// In your .scss file
+
+// Sign button (solid blue)
+.sign-button {
+  --background: rgb(45, 10, 188) !important;
+  --border-radius: 20px !important;
+  --color: white !important;
+  --padding-start: 28px !important;
+  --padding-end: 28px !important;
+  --padding-top: 24px !important;
+  --padding-bottom: 24px !important;
+  font-weight: 600 !important;
 }
 
-.liquid-button {
-  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --border-radius: 50px;
-  transition: transform 0.3s ease;
-  
-  &:hover {
-    transform: scale(1.05);
-  }
+// Login button (grey outline or grey background)
+.login-button {
+  --background: #e0e0e0 !important;  // Light grey background
+  --color: rgb(45, 10, 188) !important;  // Blue text
+  --border-radius: 20px !important;
+  --padding-start: 28px !important;
+  --padding-end: 28px !important;
+  --padding-top: 24px !important;
+  --padding-bottom: 24px !important;
+  font-weight: 600 !important;
 }
 
+// OR if you want Login button with blue border and transparent background:
+
+.login-button-outline {
+  --background: transparent !important;
+  --border-color: rgb(45, 10, 188) !important;
+  --border-style: solid !important;
+  --border-width: 2px !important;
+  --color: rgb(45, 10, 188) !important;
+  --border-radius: 50px !important;
+  --padding-start: 28px !important;
+  --padding-end: 28px !important;
+  --padding-top: 24px !important;
+  --padding-bottom: 24px !important;
+  font-weight: 600 !important;
+}
+.hot{
+  color: rgb(45, 10, 188);
+  text-align: left;
+  margin-top: 10px;
+  margin-left: 15px;
+
+}
+.hoty{
+  font-size: 20px;
+  text-align: center;
+}
+.features{
+  background-color:rgba(255, 255, 255, 0.842) ;
+  padding: 10px 15px;
+}
+// Feature Card Styling
 .feature-card {
-  padding: 24px;
-  border-radius: 16px;
-  background: var(--ion-card-background);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  text-align: center;
-  margin: 12px;
-  
-  ion-icon {
-    font-size: 48px;
-    color: var(--ion-color-primary);
-  }
+  --background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px !important;
+  margin: 16px;
+  padding: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  --box-shadow: none !important;
 }
 
-// Responsive design
-@media (max-width: 768px) {
-  .hero-container {
-    padding: 40px 16px;
-    
-    h1 {
-      font-size: 2rem;
-    }
-  }
-  
-  .image-wrapper img {
-    max-width: 100%;
-  }
+.feature-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(102, 126, 234, 0.4);
+  --background: rgba(255, 255, 255, 0.05) !important;
 }
+
+// Icon Wrapper
+.icon-wrapper {
+  width: 60px;
+  height: 60px;
+  background: rgba(45, 10, 188, 0.15);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover .icon-wrapper {
+  background: rgba(45, 10, 188, 0.25);
+  transform: scale(1.05);
+}
+
+// Icon Styling
+.card-icon {
+  font-size: 30px;
+  color: rgb(45, 10, 188) !important;
+}
+
+// Title Styling
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color:rgb(45, 10, 188) !important;
+  margin-bottom: 12px;
+}
+
+// Content Styling
+.card-content {
+  font-size: 1.3rem;
+  line-height: 1.5;
+  color: #0b0b0b !important;
+  padding-top: 0 !important;
+}
+

@@ -35,3 +35,22 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+// global.scss - Put this at the top
+
+// Disable Ionic's default backgrounds and styling
+ion-header, ion-toolbar, ion-content, ion-card, ion-item {
+  --background: transparent !important;
+  background: transparent !important;
+}
+
+// Force all Ionic components to respect your CSS
+* {
+  --ion-background-color: transparent !important;
+  --ion-text-color: inherit !important;
+}
+
+// Disable Ionic's default shadows and borders
+ion-toolbar {
+  --border-width: 0 !important;
+  border: none !important;
+}
