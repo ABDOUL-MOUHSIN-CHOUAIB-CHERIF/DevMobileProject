@@ -9,13 +9,32 @@ ion-header ion-button{
   --color:white;
   --background:rgb(45, 10, 188);
 }
-.header {
-  --background: transparent !important;
+ion-header {
   position: fixed !important;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 9999;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.header {
+  --background: transparent !important;
+  --border-width: 0 !important;
+  --box-shadow: none !important;
+  backdrop-filter: blur(8px);
+  padding: 8px 12px;
+}
+
+ion-toolbar {
+  --background: transparent !important;
+  --border-width: 0 !important;
+  --min-height: 70px;
+}
+
+ion-content {
+  --padding-top: 80px !important;
 }
 
 ion-content {

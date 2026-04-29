@@ -1,11 +1,13 @@
-<ion-content class="ion-padding">
-  <div class="container">
-    
+
+<ion-content>
+
     <!-- Header Section -->
     <div class="header-section">
-      <h1 class="title">SOVEREIGN</h1>
+      <h4 class="title"> 🛄 SOVEREIGN</h4>
+      
       <p class="subtitle">Create your vault</p>
-      <p class="description">Start your journey with Sovereign Wealth.</p>
+
+      <h4 class="description">Start your journey with Sovereign Wealth.</h4>
     </div>
 
     <!-- Form Section -->
@@ -26,13 +28,25 @@
 
       <!-- Pseudo/Username Field -->
       <div class="input-group">
-        <ion-label position="stacked" class="input-label">Pseudo (Username)</ion-label>
+        <ion-label position="stacked" class="input-label">Username</ion-label>
         <ion-input
           type="text"
        
           name="pseudo"
           required
           placeholder="alex_vault_01"
+          class="custom-input"
+        ></ion-input>
+      </div>
+
+      <div class="input-group">
+        <ion-label position="stacked" class="input-label">E_Mail</ion-label>
+        <ion-input
+          type="text"
+          
+          name="firstName"
+          required
+          placeholder="name@gmail.com"
           class="custom-input"
         ></ion-input>
       </div>
@@ -54,14 +68,29 @@
         </div>
       </div>
 
-      <!-- Sign Up Button -->
+      <div class="input-group">
+        <ion-label position="stacked" class="input-label">Confirm Password</ion-label>
+        <ion-input
+          type="password"
+         
+          name="password"
+          required
+          minlength="12"
+          placeholder="first.lastname@gmail.com"
+          class="custom-input"
+        ></ion-input>
+        <div class="password-hint">
+          Must be at least 12 characters with a symbol.
+        </div>
+      </div>
+
+      <!-- Create Account Button -->
       <ion-button
         type="submit"
         expand="block"
-        class="signup-button"
-        
+        class="create account-button"
       >
-        Sign Up
+        Create Account
         <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
       </ion-button>
 
@@ -73,16 +102,16 @@
         <ion-icon name="lock-closed-outline"></ion-icon>
         <span>SECURE HANDSHAKE</span>
       </div>
-      
+      <br>
       <div class="login-link">
         <span>Already have an account?</span>
         <ion-text color="primary" (click)="goToLogin()">Log in</ion-text>
       </div>
-
+        <br>
       <div class="encryption-note">
         END-TO-END ENCRYPTED SESSION
       </div>
     </div>
 
-  </div>
 </ion-content>
+

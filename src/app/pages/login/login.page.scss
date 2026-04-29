@@ -1,276 +1,108 @@
-// Variables
-$primary-color: #2dd36f;
-$dark-bg: #0a0a0a;
-$card-bg: #1a1a1a;
-$text-muted: #888888;
-$error-color: #eb445a;
+$primary-color: rgb(45, 10, 188);
+$accent-color: rgb(119, 210, 210);
+$text-main: rgb(11, 36, 133);
+$text-muted: #6b7280;
+$soft-bg: rgba(243, 240, 240, 0.842);
 
-ion-content {
-  --background: #000000;
-  --color: #ffffff;
+.login-container {
+  --background: $soft-bg;
 }
 
-.container {
-  min-height: 100%;
-  padding: 40px 20px;
+.login-wrapper {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  padding: 24px;
 }
 
-// ========== HEADER SECTION ==========
 .header-section {
   text-align: center;
-  margin-bottom: 50px;
-  
-  .logo-container {
-    margin-bottom: 30px;
-    
-    .title {
-      font-size: 36px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      background: linear-gradient(135deg, #ffffff 0%, $primary-color 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-transform: uppercase;
-    }
-  }
-  
-  .subtitle {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #ffffff;
-  }
-  
-  .description {
-    font-size: 14px;
-    color: $text-muted;
-    line-height: 1.5;
-    
-    .highlight {
-      color: $primary-color;
-      font-weight: 600;
-    }
-  }
+  margin-bottom: 28px;
 }
 
-// ========== OTP SECTION ==========
-.otp-section {
-  margin-bottom: 30px;
-  
-  .otp-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-    
-    .otp-input {
-      width: 55px;
-      height: 65px;
-      background: $card-bg;
-      border: 2px solid #2a2a2a;
-      border-radius: 12px;
-      text-align: center;
-      font-size: 28px;
-      font-weight: 600;
-      color: #ffffff;
-      transition: all 0.3s ease;
-      
-      &:focus {
-        outline: none;
-        border-color: $primary-color;
-        box-shadow: 0 0 0 3px rgba(45, 211, 111, 0.2);
-      }
-      
-      &.filled {
-        border-color: $primary-color;
-      }
-    }
-    
-    .dot-separator {
-      font-size: 24px;
-      color: $text-muted;
-      font-weight: bold;
-      margin: 0 -5px;
-    }
-  }
-  
-  .verify-button {
-    --background: $primary-color;
-    --background-hover: #2dc06a;
-    --border-radius: 30px;
-    --padding-top: 22px;
-    --padding-bottom: 22px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    --box-shadow: 0 4px 15px rgba(45, 211, 111, 0.3);
-    
-    ion-icon {
-      font-size: 20px;
-    }
-    
-    &:disabled {
-      --background: #444444;
-      --box-shadow: none;
-      opacity: 0.6;
-    }
-  }
+.brand-icon {
+  font-size: 42px;
+  color: $primary-color;
 }
 
-// ========== RESEND SECTION ==========
-.resend-section {
-  text-align: center;
-  margin-bottom: 25px;
-  
-  .resend-link {
-    ion-text {
-      color: $primary-color;
-      font-weight: 500;
-      cursor: pointer;
-      font-size: 14px;
-      
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-    
-    .expiry-timer {
-      display: block;
-      font-size: 12px;
-      color: $error-color;
-      margin-top: 8px;
-      font-weight: 600;
-    }
-  }
+.brand-title {
+  color: $primary-color;
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 8px;
 }
 
-// ========== HELP SECTION ==========
-.help-section {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 15px;
-  border-radius: 12px;
-  margin-bottom: 25px;
-  
-  ion-icon {
-    color: $text-muted;
-    font-size: 20px;
-    margin-top: 2px;
-  }
-  
-  p {
-    font-size: 12px;
-    color: $text-muted;
-    line-height: 1.4;
-    margin: 0;
-  }
+.subtitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: $text-main;
+  margin-top: 8px;
 }
 
-// ========== ALTERNATIVE METHOD ==========
-.alternative-method {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  background: $card-bg;
-  padding: 15px;
-  border-radius: 12px;
+.description {
+  color: $text-muted;
+  font-size: 14px;
+}
+
+.login-card {
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(45, 10, 188, 0.08);
+  background: white;
+}
+
+.input-item {
+  --background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(45, 10, 188, 0.1);
+  border-radius: 16px;
+  margin-bottom: 18px;
+  --padding-start: 14px;
+  --padding-end: 14px;
+}
+
+ion-label {
+  color: $text-main !important;
+  font-weight: 600;
+}
+
+ion-input {
+  --color: #111827;
+}
+
+.forgot-password {
+  text-align: right;
+  color: $primary-color;
+  font-size: 13px;
+  margin-bottom: 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border: 1px solid #2a2a2a;
-  
-  &:hover {
-    background: #222222;
-    border-color: $primary-color;
-  }
-  
-  .method-icon {
-    width: 45px;
-    height: 45px;
-    background: rgba(45, 211, 111, 0.1);
-    border-radius: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    ion-icon {
-      font-size: 24px;
-      color: $primary-color;
-    }
-  }
-  
-  .method-details {
-    flex: 1;
-    
-    h4 {
-      font-size: 14px;
-      font-weight: 600;
-      margin: 0 0 5px 0;
-      color: #ffffff;
-    }
-    
-    p {
-      font-size: 12px;
-      color: $text-muted;
-      margin: 0;
-      
-      strong {
-        color: $primary-color;
-      }
-    }
-  }
-  
-  .chevron {
-    color: $text-muted;
-    font-size: 20px;
-  }
 }
 
-// ========== ANIMATIONS ==========
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.sign-in-btn {
+  --background: rgb(45, 10, 188);
+  --border-radius: 18px;
+  height: 52px;
+  font-weight: 600;
+  margin-bottom: 16px;
 }
 
-.container > * {
-  animation: fadeInUp 0.5s ease-out forwards;
+.otp-btn {
+  --border-radius: 18px;
+  --color: rgb(45, 10, 188);
+  --border-color: rgba(45, 10, 188, 0.2);
+  height: 52px;
+  font-weight: 600;
 }
 
-.header-section { animation-delay: 0s; }
-.otp-section { animation-delay: 0.1s; }
-.resend-section { animation-delay: 0.2s; }
-.help-section { animation-delay: 0.3s; }
-.alternative-method { animation-delay: 0.4s; }
+.footer-link {
+  margin-top: 20px;
+  text-align: center;
+  color: $text-muted;
+  font-size: 14px;
 
-// ========== RESPONSIVE ==========
-@media (max-width: 480px) {
-  .otp-container {
-    gap: 8px;
-    
-    .otp-input {
-      width: 45px;
-      height: 55px;
-      font-size: 24px;
-    }
-  }
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 500px;
-    margin: 0 auto;
-    width: 100%;
+  span {
+    color: $primary-color;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 4px;
   }
 }
