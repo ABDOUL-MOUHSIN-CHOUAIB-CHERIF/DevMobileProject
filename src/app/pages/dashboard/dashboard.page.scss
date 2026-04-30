@@ -1,0 +1,458 @@
+// ─── Design Tokens ───────────────────────────────────────────────
+$primary:        #000666;
+$primary-mid:    #1a237e;
+$primary-light:  #3949ab;
+$accent-green:   #00c853;
+$accent-red:     #e53935;
+$surface:        #f5f5f7;
+$card-bg:        #ffffff;
+$text-main:      #1a1c2e;
+$text-muted:     #6b6f8a;
+$income-bg:      #e8f5e9;
+$income-fg:      #1b5e20;
+$expense-bg:     #fce4ec;
+$expense-fg:     #b71c1c;
+
+// ─── Header ──────────────────────────────────────────────────────
+ion-header {
+  position: fixed !important;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+}
+
+.header-toolbar {
+  --background: rgba(255,255,255,0.75);
+  --border-width: 0;
+  --box-shadow: 0 2px 20px rgba(26,35,126,0.07);
+  --min-height: 68px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 0 8px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar-wrap {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid $primary-light;
+  flex-shrink: 0;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-text {
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: $primary;
+  letter-spacing: -0.3px;
+}
+
+.bell-btn {
+  --color: #{$primary};
+  ion-icon { font-size: 22px; }
+}
+
+// ─── Main Content ─────────────────────────────────────────────────
+.main-content {
+  --background: #{$surface};
+  --padding-top: 80px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-bottom: 100px;
+}
+
+// ─── Balance Card ─────────────────────────────────────────────────
+.balance-card {
+  position: relative;
+  background: linear-gradient(135deg, $primary 0%, $primary-mid 60%, $primary-light 100%);
+  border-radius: 24px;
+  padding: 28px 24px 24px;
+  margin-top: 8px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 6, 102, 0.35);
+  animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.card-glow {
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  width: 180px;
+  height: 180px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.balance-label {
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.6);
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.balance-amount-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.balance-main {
+  font-family: 'Manrope', sans-serif;
+  font-size: 40px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.balance-currency {
+  font-family: 'Manrope', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+}
+
+.badge-row {
+  display: flex;
+  align-items: center;
+}
+
+.trend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(0,200,83,0.18);
+  border: 1px solid rgba(0,200,83,0.25);
+  border-radius: 20px;
+  padding: 5px 12px;
+  color: #69ffab;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+
+  .trend-icon { font-size: 14px; }
+}
+
+// ─── Stats Grid ───────────────────────────────────────────────────
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+  animation: slideUp 0.55s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.stat-card {
+  background: $card-bg;
+  border-radius: 20px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 16px rgba(26,35,126,0.06);
+  min-height: 140px;
+  justify-content: space-between;
+}
+
+.stat-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.income-icon-wrap  { background: $income-bg; }
+.expense-icon-wrap { background: $expense-bg; }
+
+.stat-icon {
+  font-size: 20px;
+}
+
+.income-card .stat-icon  { color: $income-fg; }
+.expense-card .stat-icon { color: $expense-fg; }
+
+.stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: $text-muted;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+.stat-value {
+  font-family: 'Manrope', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1;
+}
+
+.income-value  { color: $income-fg; }
+.expense-value { color: $expense-fg; }
+
+.stat-curr {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+// ─── Section Headers ──────────────────────────────────────────────
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  margin-bottom: 12px;
+  animation: slideUp 0.55s 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  &.section-header-spaced {
+    justify-content: space-between;
+    margin-top: 24px;
+    animation-delay: 0.28s;
+  }
+}
+
+.section-icon {
+  font-size: 19px;
+  color: $primary;
+}
+
+.section-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  color: $text-main;
+  margin: 0;
+}
+
+.view-all-btn {
+  background: none;
+  border: none;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: $primary-light;
+  cursor: pointer;
+  padding: 0;
+  letter-spacing: 0.2px;
+}
+
+// ─── Insight Card ─────────────────────────────────────────────────
+.insight-card {
+  background: $card-bg;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-left: 4px solid $primary;
+  box-shadow: 0 4px 16px rgba(26,35,126,0.06);
+  animation: slideUp 0.55s 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  .insight-warn-icon {
+    font-size: 22px;
+    color: #e65100;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .insight-body {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: $text-muted;
+    line-height: 1.6;
+  }
+
+  .insight-tag {
+    font-weight: 700;
+    color: $primary;
+    margin-right: 4px;
+  }
+
+  .insight-highlight {
+    color: $text-main;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(0,6,102,0.25);
+  }
+}
+
+// ─── Transactions ─────────────────────────────────────────────────
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: slideUp 0.55s 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.tx-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: $card-bg;
+  border-radius: 16px;
+  padding: 14px 14px;
+  box-shadow: 0 2px 10px rgba(26,35,126,0.05);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 6px rgba(26,35,126,0.04);
+  }
+}
+
+.tx-icon-wrap {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  &.bg-neutral { background: #ede7f6; ion-icon { color: #512da8; } }
+  &.bg-income  { background: $income-bg; ion-icon { color: $income-fg; } }
+  &.bg-expense { background: $expense-bg; ion-icon { color: $expense-fg; } }
+
+  ion-icon { font-size: 21px; }
+}
+
+.tx-meta {
+  flex: 1;
+}
+
+.tx-name {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: $text-main;
+  margin: 0 0 2px;
+}
+
+.tx-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: $text-muted;
+  margin: 0;
+}
+
+.tx-amount {
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.amount-pos { color: $income-fg; }
+.amount-neg { color: $expense-fg; }
+
+// ─── Bottom Nav ───────────────────────────────────────────────────
+.bottom-nav {
+  --background: rgba(255,255,255,0.88);
+  --border: none;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: none;
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -6px 24px rgba(26,35,126,0.08);
+  padding: 6px 4px 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 999;
+  height: 72px;
+}
+
+.nav-tab {
+  --color: #{$text-muted};
+  --color-selected: #{$primary};
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:active { transform: scale(0.88); }
+}
+
+.active-tab {
+  --color: #{$primary} !important;
+  .nav-icon { color: $primary; }
+  .nav-label { color: $primary; font-weight: 700; }
+}
+
+.nav-icon {
+  font-size: 22px;
+  color: $text-muted;
+}
+
+.nav-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  color: $text-muted;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+// FAB
+.fab-slot {
+  position: relative;
+  bottom: 20px;
+  flex-shrink: 0;
+}
+
+.fab-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $primary 0%, $primary-mid 100%);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0,6,102,0.4);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:active {
+    transform: scale(0.93);
+    box-shadow: 0 3px 12px rgba(0,6,102,0.3);
+  }
+
+  .fab-icon { font-size: 24px; color: #fff; }
+}
+
+// ─── Keyframes ────────────────────────────────────────────────────
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

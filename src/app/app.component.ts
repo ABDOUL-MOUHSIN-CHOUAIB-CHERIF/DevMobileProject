@@ -24,6 +24,8 @@ import {
   closeCircleOutline,
   alertCircleOutline,
   arrowForwardOutline,
+  arrowDownOutline,
+  arrowUpOutline,
   arrowBackOutline,
   homeOutline,
   barChartOutline,
@@ -34,7 +36,8 @@ import {
   cloudUploadOutline,
   cloudDownloadOutline,
   trashOutline,
-  createOutline
+  createOutline,
+  personOutline
 } from 'ionicons/icons';
 
 @Component({
@@ -80,7 +83,10 @@ export class AppComponent {
       'cloud-upload-outline': cloudUploadOutline,
       'cloud-download-outline': cloudDownloadOutline,
       'trash-outline': trashOutline,
-      'create-outline': createOutline
+      'create-outline': createOutline,
+      'person-outline': personOutline,
+      'arrow-down-outline' : arrowDownOutline,
+      'arrow-up-outline': arrowUpOutline
     });
   }
 }
