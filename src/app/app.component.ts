@@ -24,6 +24,8 @@ import {
   closeCircleOutline,
   alertCircleOutline,
   arrowForwardOutline,
+  arrowDownOutline,
+  arrowUpOutline,
   arrowBackOutline,
   homeOutline,
   barChartOutline,
@@ -83,7 +85,12 @@ export class AppComponent {
       'trash-outline': trashOutline,
       'create-outline': createOutline,
       'person-outline': personOutline,
+<<<<<<< HEAD
      
+=======
+      'arrow-down-outline' : arrowDownOutline,
+      'arrow-up-outline': arrowUpOutline
+>>>>>>> f08dbe4a4fe852991dabb922a8e1c79405a8c866
     });
   }
 }
