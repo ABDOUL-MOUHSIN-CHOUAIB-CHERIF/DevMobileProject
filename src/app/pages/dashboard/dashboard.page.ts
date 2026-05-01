@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -48,7 +47,7 @@ export interface Transaction {
   imports: [
     CommonModule,
     DecimalPipe,
-    RouterLink,
+    
     IonHeader,
     IonToolbar,
     IonTitle,

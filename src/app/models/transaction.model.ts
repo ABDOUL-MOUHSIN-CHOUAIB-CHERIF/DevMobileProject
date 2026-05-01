@@ -20,7 +20,7 @@ export interface Transaction {
   description: string;
   date: Date;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt: Date; 
 }
 
 export interface DateRange {

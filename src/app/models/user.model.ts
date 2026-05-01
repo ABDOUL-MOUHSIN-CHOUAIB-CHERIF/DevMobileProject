@@ -8,7 +8,7 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
 }
-
+ 
 export interface UserCredentials {
   email: string;
   password: string;
