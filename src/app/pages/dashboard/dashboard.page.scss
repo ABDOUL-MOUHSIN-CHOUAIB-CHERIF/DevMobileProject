@@ -1,3 +1,39 @@
+<<<<<<< HEAD
+
+ion-header {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.header {
+  --background: transparent !important;
+  --border-width: 0 !important;
+  --box-shadow: none !important;
+  backdrop-filter: blur(8px);
+  padding: 8px 12px;
+}
+
+ion-toolbar {
+  --background: transparent !important;
+  --border-width: 0 !important;
+  --min-height: 70px;
+}
+.icon1{
+  color:rgb(255, 255, 255) !important;
+  font-size: 25px;
+  margin-right: 8px;
+  margin-top: 8px;
+  width: 30px;
+  padding: 5px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: rgb(0, 123, 255);
+=======
 // ─── Design Tokens ───────────────────────────────────────────────
 $primary:        #000666;
 $primary-mid:    #1a237e;
@@ -455,4 +491,5 @@ ion-header {
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
+>>>>>>> f08dbe4a4fe852991dabb922a8e1c79405a8c866
 }
