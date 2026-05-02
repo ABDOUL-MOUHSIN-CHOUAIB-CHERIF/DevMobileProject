@@ -1,35 +1,171 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title class="primary danger">Souvereign Wealth </ion-title>
 
-    <ion-buttons>
-  <ion-button>
-    <ion-icon name="notications-outline"></ion-icon>
-  </ion-button>
-</ion-buttons>    
-  </ion-toolbar>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <ion-content>
-    <section class="features">
-  <ion-card class="feature-card">
-    <ion-card-header>
-        <div class="icon-wrapper">
-          <ion-icon name="analytics-outline" class="card-icon"></ion-icon>
-        </div>
-        <ion-card-title class="card-title">AI Analytics</ion-card-title>
-      </ion-card-header>
-    <ion-card-content class="card-content">
-        Advanced machine learning algorithms scan millions of data points to identify non-obvious correlations in your portfolio.
-    </ion-card-content>
-  </ion-card>
-   </section>
+<ion-header class="ion-no-border">
+  <div class="custom-header">
+    <div class="header-brand">
+      <div class="header-avatar">SW</div>
+      <span>Sovereign Wealth</span>
+    </div>
+    <button class="bell-btn">
+      <ion-icon name="notifications-outline"></ion-icon>
+    </button>
+  </div>
 </ion-header>
-  </ion-content>
-   
 
+<ion-content>
+  <!-- PAGE TITLE -->
+  <div class="page-title-block">
+    <p class="page-eyebrow">Intelligence</p>
+    <h1 class="page-title">Analytics &<br></h1>
+  </div>
 
+  <!-- PERIOD TABS -->
+  <div class="period-tabs">
+    @for (tab of tabs; track tab) {
+      <button 
+        class="period-tab" 
+        [class.active]="selectedTab === tab"
+        (click)="setTab(tab)">
+        {{ tab }}
+      </button>
+    }
+  </div>
 
+  <!-- NET BALANCE PROJECTION -->
+  <div class="card">
+    <div class="net-header">
+      <div>
+        <div class="card-title">Net Balance<br>Projection</div>
+        <div class="card-sub">AI-driven predictive trajectory<br>for the next 30 days</div>
+      </div>
+      <div class="net-badge">
+        <ion-icon name="trending-up-outline"></ion-icon>
+        +12.4% Est.
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <canvas #lineChart></canvas>
+    </div>
+    <div class="x-labels">
+      <span>JAN 15</span>
+      <span>JAN 22</span>
+      <span>JAN 29</span>
+      <span>FEB 05</span>
+      <span class="now-label">NOW</span>
+      <span>PROJECTED</span>
+    </div>
+  </div>
 
+  <!-- CATEGORY DEPTH -->
+  <div class="card">
+    <div class="card-title">Category Depth</div>
+    <div class="card-sub">Top allocation</div>
+    <div class="donut-wrap">
+      <canvas #donutChart></canvas>
+      <div class="donut-center">
+        <div class="donut-amount">$8,420</div>
+        <div class="donut-label">TOTAL EXP</div>
+      </div>
+    </div>
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-left">
+          <div class="legend-dot lifestyle"></div>
+          <span class="legend-name">Lifestyle</span>
+        </div>
+        <span class="legend-pct">45%</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-left">
+          <div class="legend-dot fixed"></div>
+          <span class="legend-name">Fixed Costs</span>
+        </div>
+        <span class="legend-pct">25%</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-left">
+          <div class="legend-dot investment"></div>
+          <span class="legend-name">Investment</span>
+        </div>
+        <span class="legend-pct">15%</span>
+      </div>
+    </div>
+  </div>
 
+  <!-- EFFICIENCY INDEX -->
+  <div class="card">
+    <div class="eff-header">
+      <span class="eff-title">Efficiency Index</span>
+      <div class="eff-legend">
+        <div class="eff-leg-item">
+          <div class="eff-dot spend"></div>
+          SPEND
+        </div>
+        <div class="eff-leg-item">
+          <div class="eff-dot save"></div>
+          SAVE
+        </div>
+      </div>
+    </div>
+    <div class="bar-chart-wrap">
+      <canvas #barChart></canvas>
+    </div>
+  </div>
 
+  <!-- SMART ANALYSIS BANNER -->
+  <div class="smart-banner">
+    <div class="smart-eyebrow">
+      <ion-icon name="sparkles-outline"></ion-icon>
+      SMART ANALYSIS
+    </div>
+    <div class="smart-title">
+      You're on track to save $2,400 more than last month.
+    </div>
+    <div class="smart-body">
+      By reducing 'Lifestyle' expenses by just 8% next week, you can achieve your 'New Home' goal 14 days earlier.
+    </div>
+    <button class="smart-btn">Optimize My Budget</button>
+  </div>
 
+  <!-- TREND VELOCITY -->
+  <div class="section-header">
+    <span class="section-title">Trend Velocity</span>
+    <span class="full-report">Full Report →</span>
+  </div>
+
+  <div class="trend-card">
+    <div class="trend-icon recurring">
+      <ion-icon name="repeat-outline"></ion-icon>
+    </div>
+    <div class="trend-info">
+      <div class="trend-eyebrow">Recurring</div>
+      <div class="trend-amount negative">−$2,150.00</div>
+      <div class="trend-change">Decreased 4.2%</div>
+    </div>
+  </div>
+
+  <div class="trend-card">
+    <div class="trend-icon inflow">
+      <ion-icon name="arrow-down-outline"></ion-icon>
+    </div>
+    <div class="trend-info">
+      <div class="trend-eyebrow">Net Inflow</div>
+      <div class="trend-amount positive">+$8,940.00</div>
+      <div class="trend-change">Increased 18%</div>
+    </div>
+  </div>
+
+  <div class="trend-card last">
+    <div class="trend-icon outlier">
+      <ion-icon name="warning-outline"></ion-icon>
+    </div>
+    <div class="trend-info">
+      <div class="trend-eyebrow">Outliers</div>
+      <div class="trend-amount">3 High Spends</div>
+      <div class="trend-change review-needed">Needs Review</div>
+    </div>
+  </div>
+
+  <div class="spacer-bottom"></div>
+</ion-content>

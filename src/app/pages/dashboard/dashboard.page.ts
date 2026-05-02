@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader,IonIcon, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 =======
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -17,7 +15,7 @@ import {
   IonTabBar,
   IonTabButton,
 } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
+//import { addIcons } from 'ionicons';
 import {
   notificationsOutline,
   arrowDownOutline,
@@ -44,20 +42,18 @@ export interface Transaction {
   iconBg: string;       // CSS class for icon background
   iconColor: string;    // CSS class for icon color
 }
->>>>>>> f08dbe4a4fe852991dabb922a8e1c79405a8c866
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-<<<<<<< HEAD
-  imports: [IonContent, IonHeader,IonIcon,  IonTitle, IonToolbar, CommonModule, FormsModule]
-=======
+  //imports: [IonContent, IonHeader,IonIcon,   IonTitle, IonToolbar, CommonModule, FormsModule]
+
   imports: [
     CommonModule,
     DecimalPipe,
-    RouterLink,
+    
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -67,8 +63,9 @@ export interface Transaction {
     IonContent,
     IonTabBar,
     IonTabButton,
+    IonIcon,
+    
   ],
->>>>>>> f08dbe4a4fe852991dabb922a8e1c79405a8c866
 })
 export class DashboardPage implements OnInit {
 

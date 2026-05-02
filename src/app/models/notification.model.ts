@@ -15,7 +15,7 @@ export interface Notification {
   createdAt: Date;
   read: boolean;
   data?: any;  // Additional data (e.g., loanId, goalId)
-}
+} 
 
 export interface NotificationPreferences {
   userId: string;

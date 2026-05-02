@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar , IonIcon, IonText, IonButton} from '@ionic/angular/standalone';
+import { IonContent, IonIcon, IonText, IonButton} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.page.html',
   styleUrls: ['./forgot-password.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar,
+  imports: [IonContent,  
            CommonModule, FormsModule, IonIcon, IonText,
           IonButton]
 })
