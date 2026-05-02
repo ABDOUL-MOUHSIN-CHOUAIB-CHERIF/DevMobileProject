@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router'
-import { IonContent ,IonInput, IonLabel,IonCard,  IonButton, IonText,  IonIcon} from '@ionic/angular/standalone';
+import { IonContent ,IonInput, IonLabel,  IonButton, IonText,  IonIcon} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-signup',
@@ -12,7 +12,7 @@ import { IonContent ,IonInput, IonLabel,IonCard,  IonButton, IonText,  IonIcon} 
   imports: [IonContent, CommonModule,
              FormsModule, IonIcon,
             IonText, IonButton,
-            IonLabel, IonInput, IonCard]
+            IonLabel, IonInput]
 })
 export class SignupPage  {
 

@@ -5,7 +5,7 @@ export interface SpendingSummary {
   balance: number;
   categoryBreakdown: CategorySpending[];
   topExpenses: TopExpense[];
-  savingsRate: number;
+  savingsRate: number; 
 }
 
 export interface CategorySpending {

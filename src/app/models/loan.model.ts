@@ -18,7 +18,7 @@ export interface Loan {
 }
 
 export interface Repayment {
-  repaymentId: string;
+  repaymentId: string; 
   loanId: string;
   amount: number;
   date: Date;

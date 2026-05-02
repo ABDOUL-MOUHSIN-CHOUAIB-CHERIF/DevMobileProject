@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-//import { IonContent, IonHeader,IonIcon, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-//import { CommonModule, DecimalPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { addIcons } from 'ionicons';
-//import { notificationsOutline, arrowDownOutline, arrowUpOutline, sparklesOutline, /* add all others here */ } from 'ionicons/icons';
+import { IonContent, IonHeader,IonIcon, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+=======
+import { CommonModule, DecimalPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -54,8 +52,8 @@ export interface Transaction {
 
   imports: [
     CommonModule,
-    //DecimalPipe,
-    RouterLink,
+    DecimalPipe,
+    
     IonHeader,
     IonToolbar,
     IonTitle,
