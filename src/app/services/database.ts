@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CapacitorSQLite, SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { Capacitor } from '@capacitor/core';
+import { hasher } from './hasher';
 
 @Injectable({
   providedIn: 'root'
@@ -27,11 +28,10 @@ export class DatabaseService {
     const schema = `
                   -- 1. Users Table
             CREATE TABLE IF NOT EXISTS users (
-                userId TEXT PRIMARY KEY,
+                userId TEXT PRIMARY KEY AUTOINCREMENT = 100,
                 email TEXT UNIQUE NOT NULL,
                 password TEXT NOT NULL,
                 name TEXT NOT NULL,
-                preferredLanguage TEXT  'en' | 'fr',
                 createdAt TEXT NOT NULL,
                 updatedAt TEXT NOT NULL
             );
@@ -127,5 +127,28 @@ export class DatabaseService {
     console.log('Database Ready! 🚀');
   }
 
- 
+//  function to store 
+// database.service.ts
+async addUser(user: any) {
+  const sql = `
+    INSERT INTO users (userId, email, password, name, createdAt, updatedAt) 
+    VALUES (?, ?, ?, ?, ?, ?);
+  `;
+  const params = [
+    user.userId,
+    user.email,
+    user.password,
+    user.name,
+    user.createdAt,
+    user.updatedAt
+  ];
+
+  try {
+    return await this.db.run(sql, params);
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw e;
+  }
+}
+    
 }

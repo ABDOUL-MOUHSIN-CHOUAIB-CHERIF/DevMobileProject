@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+<<<<<<< Updated upstream
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader,IonIcon, IonTitle, IonToolbar } from '@ionic/angular/standalone';
@@ -16,6 +17,17 @@ import {
   IonTabButton,
 } from '@ionic/angular/standalone';
 //import { addIcons } from 'ionicons';
+=======
+import { IonContent, IonHeader,IonIcon,
+         IonTitle, IonToolbar,
+           IonButtons,
+          IonButton, IonCardHeader,
+          IonTabBar,
+          IonTabButton, } from '@ionic/angular/standalone';
+import { CommonModule, DecimalPipe } from '@angular/common';
+
+import { addIcons } from 'ionicons';
+>>>>>>> Stashed changes
 import {
   notificationsOutline,
   arrowDownOutline,
@@ -42,30 +54,41 @@ export interface Transaction {
   iconBg: string;       // CSS class for icon background
   iconColor: string;    // CSS class for icon color
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
+<<<<<<< Updated upstream
   //imports: [IonContent, IonHeader,IonIcon,   IonTitle, IonToolbar, CommonModule, FormsModule]
 
+=======
+>>>>>>> Stashed changes
   imports: [
     CommonModule,
     DecimalPipe,
-    
     IonHeader,
     IonToolbar,
     IonTitle,
+     IonIcon,
+     IonCardHeader,
+    IonContent,
     IonButtons,
     IonButton,
-    IonIcon,
-    IonContent,
     IonTabBar,
     IonTabButton,
     IonIcon,
     
   ],
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 })
 export class DashboardPage implements OnInit {
 

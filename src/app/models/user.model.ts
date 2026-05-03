@@ -4,7 +4,6 @@ export interface User {
   email: string;
   password: string;  // hashed
   name: string;
-  preferredLanguage: 'fr' | 'en';
   createdAt: Date;
   updatedAt: Date;
 }

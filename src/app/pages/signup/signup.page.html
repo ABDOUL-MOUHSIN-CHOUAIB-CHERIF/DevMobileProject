@@ -1,106 +1,41 @@
+<ion-content class="ion-padding">
+  <div class="header-section">
+    <h4 class="title"> 🛄 SOVEREIGN</h4>
+    <p class="subtitle">Create your vault</p>
+  </div>
 
-<ion-content>
-
-    <!-- Header Section -->
-    <div class="header-section">
-      <h4 class="title"> 🛄 SOVEREIGN</h4>
-      
-      <p class="subtitle">Create your vault</p>
-
-      <h4 class="description">Start your journey with Sovereign Wealth.</h4>
+  <form #signUpForm="ngForm" (ngSubmit)="onSignUp(signUpForm)">
+    <div class="input-group">
+      <ion-label position="stacked" class="input-label">Full Name</ion-label>
+      <ion-input type="text" name="fullName" ngModel required placeholder="Alexander" class="custom-input"></ion-input>
     </div>
 
-    <!-- Form Section -->
-    <form  #signUpForm="ngForm">
-      
-      <!-- Full Name Field -->
-      <div class="input-group">
-        <ion-label position="stacked" class="input-label">Full Name</ion-label>
-        <ion-input
-          type="text"
-          
-          name="firstName"
-          required
-          placeholder="Alexander"
-          class="custom-input"
-        ></ion-input>
-      </div>
-
-    
-
-      <div class="input-group">
-        <ion-label position="stacked" class="input-label">E_Mail</ion-label>
-        <ion-input
-          type="text"
-          
-          name="firstName"
-          required
-          placeholder="name@gmail.com"
-          class="custom-input"
-        ></ion-input>
-      </div>
-
-      <!-- Password Field -->
-      <div class="input-group">
-        <ion-label position="stacked" class="input-label">Password</ion-label>
-        <ion-input
-          type="password"
-         
-          name="password"
-          required
-          minlength="12"
-          placeholder="***********"
-          class="custom-input"
-        ></ion-input>
-        <div class="password-hint">
-          Must be at least 12 characters with a symbol.
-        </div>
-      </div>
-
-      <div class="input-group">
-        <ion-label position="stacked" class="input-label">Confirm Password</ion-label>
-        <ion-input
-          type="password"
-         
-          name="password"
-          required
-          minlength="12"
-          placeholder="**************"
-          class="custom-input"
-        ></ion-input>
-        <div class="password-hint">
-          Must be at least 12 characters with a symbol.
-        </div>
-      </div>
-
-      <!-- Create Account Button -->
-      <ion-button
-        type="submit"
-        expand="block"
-        class="create account-button"
-      >
-        Create Account
-        <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
-      </ion-button>
-
-    </form>
-
-    <!-- Footer Section -->
-    <div class="footer-section">
-      <div class="secure-badge">
-        <ion-icon name="lock-closed-outline"></ion-icon>
-        <span>SECURE HANDSHAKE</span>
-      </div>
-      <br>
-      <div class="login-link">
-        <span>Already have an account?</span>
-        <ion-text color="primary" (click)="goToLogin()">Log in</ion-text>
-      </div>
-        <br>
-      <div class="encryption-note">
-        END-TO-END ENCRYPTED SESSION
-      </div>
+    <div class="input-group">
+      <ion-label position="stacked" class="input-label">E-Mail</ion-label>
+      <ion-input type="email" name="email" ngModel required placeholder="name@gmail.com" class="custom-input"></ion-input>
     </div>
 
+    <div class="input-group">
+      <ion-label position="stacked" class="input-label">Password</ion-label>
+      <ion-input type="password" name="password" ngModel required minlength="8" placeholder="***********" class="custom-input"></ion-input>
+    </div>
+
+    <div class="input-group">
+      <ion-label position="stacked" class="input-label">Confirm Password</ion-label>
+      <ion-input type="password" name="confirmPassword" ngModel required placeholder="**************" class="custom-input"></ion-input>
+    </div>
+
+   
+    <ion-button type="submit"  [disabled]="!signUpForm.valid" expand="block" class="create-account-button">
+      Create Account
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+    </ion-button>
+  </form>
+
+  <div class="footer-section">
+    <div class="login-link">
+      <span>Already have an account?</span>
+      <ion-text color="primary" (click)="goToLogin()" style="cursor: pointer;"> Log in</ion-text>
+    </div>
+  </div>
 </ion-content>
-
