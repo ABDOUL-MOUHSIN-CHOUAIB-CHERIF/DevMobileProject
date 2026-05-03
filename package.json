@@ -5,8 +5,9 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npm run copysqlwasm && ng serve",
+    "build": "npm run copysqlwasm && ng build",
+    "copysqlwasm": "copyfiles -u 3 node_modules/sql.js/dist/sql-wasm.wasm src/assets",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"
@@ -29,9 +30,11 @@
     "@capacitor/keyboard": "8.0.2",
     "@capacitor/status-bar": "8.0.2",
     "@ionic/angular": "^8.0.0",
+    "@ionic/pwa-elements": "^3.4.0",
     "bcryptjs": "^3.0.3",
     "chart.js": "^4.5.1",
     "ionicons": "^7.4.0",
+    "jeep-sqlite": "^2.8.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.8.1",
     "zone.js": "~0.15.0"
@@ -52,6 +55,7 @@
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^9.16.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsdoc": "^48.2.1",

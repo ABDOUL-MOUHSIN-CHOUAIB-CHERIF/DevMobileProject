@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CapacitorSQLite, SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { Capacitor } from '@capacitor/core';
-import { hasher } from './hasher';
 
 @Injectable({
   providedIn: 'root'
@@ -9,26 +8,29 @@ import { hasher } from './hasher';
 export class DatabaseService {
   private sqlite: SQLiteConnection = new SQLiteConnection(CapacitorSQLite);
   private db!: SQLiteDBConnection;
+  private isDbReady: boolean = false; // Track if we are ready
 
   async initializeApp() {
-    // If on Web, you'd need the jeep-sqlite element, 
-    // but we are focusing on your Android/APK build.
-    
-    this.db = await this.sqlite.createConnection(
-      'etracker_db', 
-      false, 
-      'no-encryption', 
-      1, 
-      false
-    );
+    const platform = Capacitor.getPlatform();
 
-    await this.db.open();
-    
-    // Create your tables immediately
-    const schema = `
+    // 1. WEB SPECIFIC SETUP
+    if (platform === 'web') {
+      const jeepEl = document.querySelector('jeep-sqlite');
+      if (jeepEl) {
+        await (jeepEl as any).initWebStore();
+      }
+    }
+
+    try {
+      // 2. Open Connection
+      this.db = await this.sqlite.createConnection('etracker_db', false, 'no-encryption', 1, false);
+      await this.db.open();
+
+      // 3. Fixed Schema (Removed AUTOINCREMENT from TEXT)
+       const schema = `
                   -- 1. Users Table
             CREATE TABLE IF NOT EXISTS users (
-                userId TEXT PRIMARY KEY AUTOINCREMENT = 100,
+                userId TEXT PRIMARY KEY ,
                 email TEXT UNIQUE NOT NULL,
                 password TEXT NOT NULL,
                 name TEXT NOT NULL,
@@ -123,32 +125,79 @@ export class DatabaseService {
                 FOREIGN KEY (userId) REFERENCES users(userId) ON DELETE CASCADE
             );
     `;
-    await this.db.execute(schema);
-    console.log('Database Ready! 🚀');
+      
+      await this.db.execute(schema);
+      this.isDbReady = true; // Mark as ready!
+      console.log('Database Ready! 🚀');
+
+    } catch (err) {
+      console.error('Initialisation failed:', err);
+    }
   }
 
-//  function to store 
-// database.service.ts
-async addUser(user: any) {
-  const sql = `
-    INSERT INTO users (userId, email, password, name, createdAt, updatedAt) 
-    VALUES (?, ?, ?, ?, ?, ?);
-  `;
-  const params = [
-    user.userId,
-    user.email,
-    user.password,
-    user.name,
-    user.createdAt,
-    user.updatedAt
-  ];
+  // Helper to ensure we don't call run() on undefined
+  private async ensureDbReady() {
+    if (!this.isDbReady || !this.db) {
+      // Wait for initialization if called too early
+      await this.initializeApp();
+    }
+  }
 
+  async addUser(user: any) {
+    await this.ensureDbReady(); // Safety check!
+
+    const sql = `
+      INSERT INTO users (userId, email, password, name, createdAt, updatedAt) 
+      VALUES (?, ?, ?, ?, ?, ?);
+    `;
+    const params = [
+      user.userId,
+      user.email,
+      user.password,
+      user.name,
+      user.createdAt,
+      user.updatedAt
+    ];
+
+    try {
+      const result = await this.db.run(sql, params);
+      
+      // CRITICAL FOR WEB: Save after every write!
+      if (Capacitor.getPlatform() === 'web') {
+        await this.sqlite.saveToStore('etracker_db');
+      }
+      
+      return result;
+    } catch (e) {
+      console.error('Database Error:', e);
+      throw e;
+    }
+
+  }
+  // database.service.ts
+async getUserByEmail(email: string) {
+  await this.ensureDbReady();
+  const sql = `SELECT * FROM users WHERE email = ? LIMIT 1;`;
   try {
-    return await this.db.run(sql, params);
+    const result = await this.db.query(sql, [email.toLowerCase()]);
+    return result.values && result.values.length > 0 ? result.values[0] : null;
   } catch (e) {
-    console.error('Database Error:', e);
-    throw e;
+    console.error('Error fetching user:', e);
+    return null;
   }
 }
-    
+// database.service.ts
+
+async getTransactions(userId: string) {
+  await this.ensureDbReady();
+  // Get latest transactions first
+  const sql = `SELECT * FROM transactions WHERE userId = ? ORDER BY date DESC`;
+  try {
+    const result = await this.db.query(sql, [userId]);
+    return result.values || [];
+  } catch (e) {
+    console.error('Error fetching transactions', e);
+    return [];
+  }
+}
 }

@@ -1,69 +1,44 @@
+<!-- login.page.html -->
 <ion-content [fullscreen]="true" class="login-container">
-
   <div class="login-wrapper">
-
-    <!-- Brand Header -->
     <div class="header-section">
       <ion-icon name="wallet-outline" class="brand-icon"></ion-icon>
       <h2 class="brand-title">SOVEREIGN</h2>
       <p class="subtitle">Welcome Back</p>
-      <p class="description">
-        Access your secure wealth portal
-      </p>
     </div>
 
-    <!-- Login Card -->
     <ion-card class="login-card">
       <ion-card-content>
+        <!-- Wrapped in a form -->
+        <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+          
+          <ion-item lines="none" class="input-item">
+            <ion-label position="stacked">Email Address</ion-label>
+            <ion-input type="email" name="email" ngModel required placeholder="name@gmail.com"></ion-input>
+          </ion-item>
 
-        <!-- Email -->
-        <ion-item lines="none" class="input-item">
-          <ion-label position="stacked">Email Address</ion-label>
-          <ion-input
-            type="email"
-            placeholder="name@gmail.com"
-          ></ion-input>
-        </ion-item>
+          <ion-item lines="none" class="input-item">
+            <ion-label position="stacked">Password</ion-label>
+            <ion-input type="password" name="password" ngModel required placeholder="************"></ion-input>
+          </ion-item>
 
-        <!-- Password -->
-        <ion-item lines="none" class="input-item">
-          <ion-label position="stacked">Password</ion-label>
-          <ion-input
-            type="password"
-            placeholder="************"
-          ></ion-input>
-        </ion-item>
+          <div class="forgot-password" (click)="goToPassword()">Forgot password?</div>
 
-        <div class="forgot-password" (click)="goToPassword()">
-          Forgot password?
-        </div>
+          <ion-button type="submit" [disabled]="!loginForm.valid" expand="block" class="sign-in-btn">
+            Sign In
+            <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+        </form>
 
-        <!-- Main Button -->
-        <ion-button expand="block" class="sign-in-btn">
-          Sign In
-          <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
-        </ion-button>
-
-        <!-- OTP Button -->
-        <ion-button
-          expand="block"
-          fill="outline"
-          class="otp-btn"
-          (click)="goToDashboard()"
-        >
+        <ion-button expand="block" fill="outline" class="otp-btn" (click)="goToDashboard()">
           <ion-icon slot="start" name="shield-checkmark-outline"></ion-icon>
           Sign In with OTP
         </ion-button>
-
       </ion-card-content>
     </ion-card>
 
-    <!-- Footer -->
     <div class="footer-link">
-      Don’t have an account?
-      <span (click)="goToSignup()">Sign Up</span>
+      Don’t have an account? <span (click)="goToSignup()">Sign Up</span>
     </div>
-
   </div>
-
 </ion-content>

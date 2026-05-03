@@ -37,8 +37,10 @@ import {
   cloudDownloadOutline,
   trashOutline,
   createOutline,
-  personOutline
+  personOutline,
+ 
 } from 'ionicons/icons';
+import { DatabaseService } from './services/database';
 
 @Component({
   selector: 'app-root',
@@ -48,9 +50,11 @@ import {
 })
 export class AppComponent {
   
-  // ✅ CORRECT: Constructor with addIcons inside
-  constructor() {
-    addIcons({
+
+  constructor(private dbService: DatabaseService) {
+  this.dbService.initializeApp();
+
+   addIcons({
       wallet,
       'analytics-outline': analyticsOutline,
       'shield-checkmark-outline': shieldCheckmarkOutline,
@@ -88,5 +92,6 @@ export class AppComponent {
       'arrow-down-outline' : arrowDownOutline,
       'arrow-up-outline': arrowUpOutline
     });
-  }
+}
+  // ✅ CORRECT: Constructor with addIcons inside
 }
