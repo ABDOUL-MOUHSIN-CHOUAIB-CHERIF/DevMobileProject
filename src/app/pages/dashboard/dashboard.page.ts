@@ -1,31 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { addIcons } from 'ionicons';
-import { 
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-     IonCardHeader,
-    IonContent,
-    IonButtons,
-    IonButton,
-    IonTabBar,
-    IonTabButton,
-    IonIcon, } from '@ionic/angular/standalone';
-import {notificationsOutline,arrowDownOutline,arrowUpOutline,sparklesOutline,warningOutline,trendingUpOutline,bagOutline,restaurantOutline,
-        cashOutline, home, barChartOutline, qrCodeOutline, trophyOutline,} from 'ionicons/icons';
-import { DatabaseService } from '../../services/database'; // Adjust path
 import { Router } from '@angular/router';
+import { addIcons } from 'ionicons';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, 
+        IonButton,  IonTabBar,  IonTabButton,  IonIcon, IonCardHeader } from '@ionic/angular/standalone';
+
+import {notificationsOutline,arrowDownOutline,arrowUpOutline,sparklesOutline,warningOutline,trendingUpOutline,bagOutline,restaurantOutline,
+        cashOutline,home,barChartOutline,qrCodeOutline,trophyOutline,busOutline,helpCircleOutline } from 'ionicons/icons';
+
+import { DatabaseService } from '../../services/database';
+
 export interface Transaction {
-  id: number;
+  id: string | number;
   name: string;
   category: string;
   date: string;
-  amount: number;       // positive = income, negative = expense
+  amount: number;
   icon: string;
-  iconBg: string;       // CSS class for icon background
-  iconColor: string;    // CSS class for icon color
+  iconBg: string;
 }
 
 @Component({
@@ -35,38 +28,58 @@ export interface Transaction {
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     IonHeader,
     IonToolbar,
     IonTitle,
-     IonIcon,
-     IonCardHeader,
+    IonIcon,
+    IonCardHeader,
     IonContent,
     IonButtons,
     IonButton,
     IonTabBar,
-    IonTabButton,
-    IonIcon,
-    
+    IonTabButton
   ],
 })
 export class DashboardPage implements OnInit {
-  userName: string = 'Guest';
+  // ── User Data ──
+  userName: string = 'User';
   userId: string = '';
-  
+
+  // ── Wallet Data ──
   totalBalance = 0;
   totalIncome = 0;
   totalExpenses = 0;
-  transactions: any[] = [];
+
+  // ── Transactions List ──
+  transactions: Transaction[] = [];
 
   constructor(
-    private dbService: DatabaseService, 
+    private dbService: DatabaseService,
     private router: Router
   ) {
-    addIcons({ /* ... your icons ... */ });
+    // Register all icons used in the dashboard
+    addIcons({
+      notificationsOutline,
+      arrowDownOutline,
+      arrowUpOutline,
+      sparklesOutline,
+      warningOutline,
+      trendingUpOutline,
+      bagOutline,
+      restaurantOutline,
+      cashOutline,
+      home,
+      barChartOutline,
+      qrCodeOutline,
+      trophyOutline,
+      busOutline,
+      helpCircleOutline
+    });
   }
 
-  async ngOnInit() {
-    // 1. Check who is logged in
+  async ngOnInit(): Promise<void> {
+    // 1. Check Authentication Session
     const session = localStorage.getItem('active_user');
     if (!session) {
       this.router.navigate(['/login']);
@@ -77,29 +90,38 @@ export class DashboardPage implements OnInit {
     this.userName = user.name;
     this.userId = user.id;
 
-    // 2. Load Real Data
+    // 2. Load Real Data from SQLite
     await this.loadDashboardData();
   }
 
-  async loadDashboardData() {
-    // Fetch transactions from SQLite
-    const data = await this.dbService.getTransactions(this.userId);
-    
-    // Map database fields to your UI interface
-    this.transactions = data.map((tx: any) => ({
-      id: tx.txId,
-      name: tx.description || tx.category,
-      category: tx.category,
-      date: tx.date,
-      amount: tx.type === 'expense' ? -tx.amount : tx.amount,
-      icon: this.getIconForCategory(tx.category),
-      iconBg: tx.type === 'expense' ? 'bg-expense' : 'bg-income'
-    }));
+  /** Fetches transactions from DB and maps them to the UI format */
+  async loadDashboardData(): Promise<void> {
+    try {
+      const data = await this.dbService.getTransactions(this.userId);
 
-    this.recalcTotals();
+      if (data && data.length > 0) {
+        this.transactions = data.map((tx: any) => ({
+          id: tx.txId,
+          name: tx.description || tx.category,
+          category: tx.category,
+          date: tx.date,
+          // Convert type to positive/negative for UI coloring
+          amount: tx.type === 'expense' ? -tx.amount : tx.amount,
+          icon: this.getIconForCategory(tx.category),
+          iconBg: tx.type === 'expense' ? 'bg-expense' : 'bg-income'
+        }));
+      } else {
+        this.transactions = []; // Empty state
+      }
+
+      this.recalcTotals();
+    } catch (error) {
+      console.error('Error loading dashboard data:', error);
+    }
   }
 
-  recalcTotals() {
+  /** Re-calculate income, expense, and balance totals */
+  recalcTotals(): void {
     this.totalIncome = this.transactions
       .filter(t => t.amount > 0)
       .reduce((sum, t) => sum + t.amount, 0);
@@ -108,19 +130,40 @@ export class DashboardPage implements OnInit {
       .filter(t => t.amount < 0)
       .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
-    // Balance = Income - Expenses
     this.totalBalance = this.totalIncome - this.totalExpenses;
   }
 
+  /** Helper to assign icons based on category string */
   getIconForCategory(cat: string): string {
-    const icons: any = {
-      'food': 'restaurant-outline',
+    const categoryMap: { [key: string]: string } = {
+      'electronics': 'bag-outline',
       'shopping': 'bag-outline',
+      'dining': 'restaurant-outline',
+      'food': 'restaurant-outline',
+      'income': 'cash-outline',
       'salary': 'cash-outline',
-      'transport': 'bus-outline'
+      'transport': 'bus-outline',
+      'travel': 'bus-outline'
     };
-    return icons[cat.toLowerCase()] || 'help-circle-outline';
+    return categoryMap[cat.toLowerCase()] || 'help-circle-outline';
   }
 
-  // ... rest of your actions (openScanner, etc.)
+  // ── UI Actions ──
+
+  viewAll(): void {
+    this.router.navigate(['/transactions-history']);
+  }
+
+  openTransaction(tx: Transaction): void {
+    console.log('Viewing details for:', tx.name);
+  }
+
+  openScanner(): void {
+    console.log('Initiating QR Scanner...');
+  }
+
+  logout(): void {
+    localStorage.removeItem('active_user');
+    this.router.navigate(['/login']);
+  }
 }
