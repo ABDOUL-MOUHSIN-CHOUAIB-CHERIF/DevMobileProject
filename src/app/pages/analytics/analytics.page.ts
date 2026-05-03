@@ -1,30 +1,14 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-<<<<<<< Updated upstream
 import { Chart, registerables } from 'chart.js';
-=======
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, 
-          IonTitle, IonToolbar, 
-          IonButtons, IonButton,
-          IonCard, IonCardHeader, 
-          IonCardTitle , IonCardContent, IonIcon} from '@ionic/angular/standalone';
->>>>>>> Stashed changes
 
 @Component({
   selector: 'app-analytics',
   templateUrl: './analytics.page.html',
   styleUrls: ['./analytics.page.scss'],
   standalone: true,
-<<<<<<< Updated upstream
   imports: [IonicModule, CommonModule]
-=======
-  imports: [IonContent, IonHeader, IonTitle,
-           IonToolbar, CommonModule, FormsModule,
-           IonButton, IonButtons, IonCard,
-          IonCardHeader, IonCardTitle,IonIcon, IonCardContent]
->>>>>>> Stashed changes
 })
 export class AnalyticsPage implements OnInit, AfterViewInit {
   @ViewChild('lineChart') lineChartRef!: ElementRef;

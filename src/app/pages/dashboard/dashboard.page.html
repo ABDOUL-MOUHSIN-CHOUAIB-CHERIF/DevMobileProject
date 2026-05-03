@@ -1,19 +1,13 @@
 <ion-header [translucent]="true" class="ion-no-border">
-  <ion-toolbar class="header">
-    <ion-title>
-      <div class="flex-items-center">
-        <ion-icon class="icon1" name="person-outline"></ion-icon>
-        <span class="brand-text">Sovereign Wealth</span>
-      </div>
-    </ion-title>
-      <ion-icon slot="end" name=""  fill="solid">🔔</ion-icon>
-<<<<<<< Updated upstream
-
   <ion-toolbar class="header-toolbar">
     <ion-title>
       <div class="header-left">
         <div class="avatar-wrap">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJotsNs3Oj_bVTC4N2h7c1NnjBW7-qaSMk1_q7uSD6moQpMBuSMpsHgv5qjZQogVUtUBLcXyl809Vk1GmzU_W3q1HvQYDjT4HEYinZa9FXyvzk9Sio3lKnZYYpMaTpi2dYkIi1deecijU98VSJjm0nNGhpX6Q5qGFf-4Xex23-bm_0nAOK8ZKDuV1QJ_a1eZCL1i1SQRWm6Hm0fOu7-VPEiG_DxizQ1NoC6FCwQwH47jKwXtVW_0Y67z1X3w-QUDDM7dSYl0WNYfc_" alt="Profile" class="avatar-img" />
+          <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJotsNs3Oj_bVTC4N2h7c1NnjBW7-qaSMk1_q7uSD6moQpMBuSMpsHgv5qjZQogVUtUBLcXyl809Vk1GmzU_W3q1HvQYDjT4HEYinZa9FXyvzk9Sio3lKnZYYpMaTpi2dYkIi1deecijU98VSJjm0nNGhpX6Q5qGFf-4Xex23-bm_0nAOK8ZKDuV1QJ_a1eZCL1i1SQRWm6Hm0fOu7-VPEiG_DxizQ1NoC6FCwQwH47jKwXtVW_0Y67z1X3w-QUDDM7dSYl0WNYfc_"
+            alt="Profile"
+            class="avatar-img"
+          />
         </div>
         <span class="brand-text">Sovereign Wealth</span>
       </div>
@@ -23,10 +17,8 @@
         <ion-icon name="notifications-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-=======
->>>>>>> Stashed changes
   </ion-toolbar>
-<ion-header>
+</ion-header>
 
 <ion-content class="main-content" [fullscreen]="true">
 
@@ -46,21 +38,25 @@
     <div class="card-glow"></div>
   </div>
 
-  <!-- Income / Expense Bento Grid -->
+  <!-- Income / Expense Grid -->
   <div class="stats-grid">
     <div class="stat-card income-card">
       <div class="stat-icon-wrap income-icon-wrap">
         <ion-icon name="arrow-down-outline" class="stat-icon"></ion-icon>
       </div>
       <p class="stat-label">Total Income</p>
-      <p class="stat-value income-value">{{ totalIncome | number }} <span class="stat-curr">XAF</span></p>
+      <p class="stat-value income-value">
+        {{ totalIncome | number }} <span class="stat-curr">XAF</span>
+      </p>
     </div>
     <div class="stat-card expense-card">
       <div class="stat-icon-wrap expense-icon-wrap">
         <ion-icon name="arrow-up-outline" class="stat-icon"></ion-icon>
       </div>
       <p class="stat-label">Total Expenses</p>
-      <p class="stat-value expense-value">{{ totalExpenses | number }} <span class="stat-curr">XAF</span></p>
+      <p class="stat-value expense-value">
+        {{ totalExpenses | number }} <span class="stat-curr">XAF</span>
+      </p>
     </div>
   </div>
 
@@ -73,9 +69,11 @@
   <div class="insight-card">
     <ion-icon name="warning-outline" class="insight-warn-icon"></ion-icon>
     <div class="insight-body">
-      <span class="insight-tag">Deficit Risk:</span>
+      <span class="insight-tag">Deficit Risk: </span>
       Based on your current trajectory, you may face a shortfall by month-end.
-      Consider reducing <span class="insight-highlight">leisure spending by 10%</span> to stay on target.
+      Consider reducing
+      <span class="insight-highlight">leisure spending by 10%</span>
+      to stay on target.
     </div>
   </div>
 
@@ -92,7 +90,7 @@
       (click)="openTransaction(tx)"
     >
       <div class="tx-icon-wrap" [ngClass]="tx.iconBg">
-        <ion-icon [name]="tx.icon" [ngClass]="tx.iconColor"></ion-icon>
+        <ion-icon [name]="tx.icon"></ion-icon>
       </div>
       <div class="tx-meta">
         <p class="tx-name">{{ tx.name }}</p>
@@ -112,20 +110,24 @@
     <ion-icon name="home" class="nav-icon"></ion-icon>
     <span class="nav-label">Home</span>
   </ion-tab-button>
+
   <ion-tab-button class="nav-tab" tab="analytics">
     <ion-icon name="bar-chart-outline" class="nav-icon"></ion-icon>
     <span class="nav-label">Analytics</span>
   </ion-tab-button>
+
   <!-- Center FAB -->
   <div class="fab-slot">
     <button class="fab-btn" (click)="openScanner()">
       <ion-icon name="qr-code-outline" class="fab-icon"></ion-icon>
     </button>
   </div>
+
   <ion-tab-button class="nav-tab" tab="goals">
     <ion-icon name="trophy-outline" class="nav-icon"></ion-icon>
     <span class="nav-label">Goals</span>
   </ion-tab-button>
+
   <ion-tab-button class="nav-tab" tab="loans">
     <ion-icon name="cash-outline" class="nav-icon"></ion-icon>
     <span class="nav-label">Loans</span>
