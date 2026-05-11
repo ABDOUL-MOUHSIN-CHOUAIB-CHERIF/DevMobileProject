@@ -33,6 +33,11 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/sql.js/dist/",
+                "output": "assets/"
               }
             ],
             "styles": ["src/global.scss", "src/theme/variables.scss"],
@@ -51,7 +56,7 @@
                   "type": "anyComponentStyle",
                   "baseline": "2kb",
                   "maximumWarning": "4kb",
-                  "maximumError": "10kb" 
+                  "maximumError": "10kb"
                 }
               ],
               "fileReplacements": [
@@ -103,11 +108,13 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": [
+           "assets": [
+              "src/favicon.ico",
+              "src/assets",
               {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "assets"
+                "glob": "sql-wasm.wasm",
+                "input": "node_modules/sql.js/dist/",
+                "output": "assets/"
               }
             ],
             "styles": ["src/global.scss", "src/theme/variables.scss"],

@@ -15,7 +15,7 @@ import { hasher } from '../../services/hasher'; // Adjust path
   imports: [IonContent, CommonModule, FormsModule, IonIcon, IonText, IonButton, IonLabel, IonInput]
 })
 export class SignupPage {
-
+ 
   constructor(
     private router: Router,
     private dbService: DatabaseService,
@@ -49,7 +49,7 @@ export class SignupPage {
       // 4. Save to SQLite
       await this.dbService.addUser(newUser);
 
-      this.showToast('Vault Created Successfully!', 'success');
+      this.showToast('User Created Successfully!', 'success');
       
       // 5. Navigate to Login or Dashboard
       this.router.navigate(['/login']);
@@ -68,7 +68,7 @@ export class SignupPage {
       message,
       duration: 3000,
       color,
-      position: 'bottom'
+      position: 'top'
     });
     await toast.present();
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, AfterViewInit } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -46,14 +46,13 @@ import { DatabaseService } from './services/database';
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [IonApp, IonRouterOutlet],
 })
-export class AppComponent {
+export class AppComponent implements OnInit, AfterViewInit {
   
 
   constructor(private dbService: DatabaseService) {
-  this.dbService.initializeApp();
-
    addIcons({
       wallet,
       'analytics-outline': analyticsOutline,
@@ -92,6 +91,15 @@ export class AppComponent {
       'arrow-down-outline' : arrowDownOutline,
       'arrow-up-outline': arrowUpOutline
     });
-}
+  }
+
+  ngOnInit() {
+    // Other initializations if needed
+  }
+
+  ngAfterViewInit() {
+    this.dbService.initializeApp();
+  }
+
   // ✅ CORRECT: Constructor with addIcons inside
 }

@@ -155,6 +155,7 @@ export class DashboardPage implements OnInit {
   }
 
   openTransaction(tx: Transaction): void {
+    this.router.navigate(['/transaction'])
     console.log('Viewing details for:', tx.name);
   }
 
