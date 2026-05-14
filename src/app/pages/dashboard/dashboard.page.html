@@ -1,20 +1,14 @@
 <ion-header [translucent]="true" class="ion-no-border">
-  <ion-toolbar class="header">
-    <ion-title>
-      <div class="flex-items-center">
-        <ion-icon class="icon1" name="person-outline"></ion-icon>
-        <span class="brand-text">Sovereign Wealth</span>
-      </div>
-    </ion-title>
-      <ion-icon slot="end" name=""  fill="solid">🔔</ion-icon>
-
   <ion-toolbar class="header-toolbar">
     <ion-title>
       <div class="header-left">
         <div class="avatar-wrap">
           <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJotsNs3Oj_bVTC4N2h7c1NnjBW7-qaSMk1_q7uSD6moQpMBuSMpsHgv5qjZQogVUtUBLcXyl809Vk1GmzU_W3q1HvQYDjT4HEYinZa9FXyvzk9Sio3lKnZYYpMaTpi2dYkIi1deecijU98VSJjm0nNGhpX6Q5qGFf-4Xex23-bm_0nAOK8ZKDuV1QJ_a1eZCL1i1SQRWm6Hm0fOu7-VPEiG_DxizQ1NoC6FCwQwH47jKwXtVW_0Y67z1X3w-QUDDM7dSYl0WNYfc_" alt="Profile" class="avatar-img" />
         </div>
-        <span class="brand-text">Sovereign Wealth</span>
+        <div>
+          <p class="brand-text">Sovereign Wealth</p>
+          <!-- now<p class="subtext">Private banking for your portfolio</p> -->
+        </div>
       </div>
     </ion-title>
     <ion-buttons slot="end">
@@ -23,7 +17,7 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-<ion-header>
+</ion-header>
 
 <ion-content class="main-content" [fullscreen]="true">
 
@@ -105,25 +99,46 @@
 
 <!-- Bottom Navigation -->
 <ion-tab-bar class="bottom-nav">
-  <ion-tab-button class="nav-tab active-tab" tab="home">
+  <ion-tab-button
+    class="nav-tab"
+    [class.active-tab]="isActive('/dashboard')"
+    (click)="navigateTo('/dashboard')"
+  >
     <ion-icon name="home" class="nav-icon"></ion-icon>
     <span class="nav-label">Home</span>
   </ion-tab-button>
-  <ion-tab-button class="nav-tab" tab="analytics">
+
+  <ion-tab-button
+    class="nav-tab"
+    [class.active-tab]="isActive('/analytics')"
+    (click)="navigateTo('/analytics')"
+  >
     <ion-icon name="bar-chart-outline" class="nav-icon"></ion-icon>
     <span class="nav-label">Analytics</span>
   </ion-tab-button>
+
   <!-- Center FAB -->
   <div class="fab-slot">
     <button class="fab-btn" (click)="openScanner()">
       <ion-icon name="qr-code-outline" class="fab-icon"></ion-icon>
+      <span class="nav-label">+</span>
     </button>
   </div>
-  <ion-tab-button class="nav-tab" tab="goals">
+
+  <ion-tab-button
+    class="nav-tab"
+    [class.active-tab]="isActive('/savings')"
+    (click)="navigateTo('/savings')"
+  >
     <ion-icon name="trophy-outline" class="nav-icon"></ion-icon>
     <span class="nav-label">Goals</span>
   </ion-tab-button>
-  <ion-tab-button class="nav-tab" tab="loans">
+
+  <ion-tab-button
+    class="nav-tab"
+    [class.active-tab]="isActive('/loans')"
+    (click)="navigateTo('/loans')"
+  >
     <ion-icon name="cash-outline" class="nav-icon"></ion-icon>
     <span class="nav-label">Loans</span>
   </ion-tab-button>

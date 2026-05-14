@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { Router, NavigationEnd } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
 
 @Component({
@@ -17,10 +18,18 @@ export class AnalyticsPage implements OnInit, AfterViewInit {
 
   tabs = ['Daily', 'Weekly', 'Monthly', 'Annual'];
   selectedTab = 'Monthly';
+  currentPath = '/analytics';
 
-  constructor() {}
+  constructor(private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.currentPath = this.router.url;
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentPath = event.urlAfterRedirects;
+      }
+    });
+  }
 
   ngAfterViewInit() {
     this.initLineChart();
@@ -129,5 +138,18 @@ export class AnalyticsPage implements OnInit, AfterViewInit {
         //categoryPercentage: 0.75,
       }
     });
+  }
+
+  navigateTo(path: string): void {
+    this.router.navigate([path]);
+  }
+
+  isActive(path: string): boolean {
+    return this.currentPath === path;
+  }
+
+  openScanner(): void {
+    // Open QR code scanner
+    console.log('Open QR scanner');
   }
 }

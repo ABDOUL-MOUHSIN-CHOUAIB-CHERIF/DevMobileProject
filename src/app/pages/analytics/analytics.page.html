@@ -169,3 +169,50 @@
 
   <div class="spacer-bottom"></div>
 </ion-content>
+
+<!-- Bottom Navigation -->
+<ion-tab-bar class="bottom-nav">
+  <ion-tab-button
+    class="nav-tab"
+    [class.active-tab]="isActive('/dashboard')"
+    (click)="navigateTo('/dashboard')"
+  >
+    <ion-icon name="home" class="nav-icon"></ion-icon>
+    <span class="nav-label">Home</span>
+  </ion-tab-button>
+
+  <ion-tab-button
+    class="nav-tab"
+    [class.active-tab]="isActive('/analytics')"
+    (click)="navigateTo('/analytics')"
+  >
+    <ion-icon name="bar-chart-outline" class="nav-icon"></ion-icon>
+    <span class="nav-label">Analytics</span>
+  </ion-tab-button>
+
+  <!-- Center FAB -->
+  <div class="fab-slot">
+    <button class="fab-btn" (click)="openScanner()">
+      <ion-icon name="qr-code-outline" class="fab-icon"></ion-icon>
+      <span class="nav-label">+</span>
+    </button>
+  </div>
+
+  <ion-tab-button
+    class="nav-tab"
+    [class.active-tab]="isActive('/savings')"
+    (click)="navigateTo('/savings')"
+  >
+    <ion-icon name="trophy-outline" class="nav-icon"></ion-icon>
+    <span class="nav-label">Goals</span>
+  </ion-tab-button>
+
+  <ion-tab-button
+    class="nav-tab"
+    [class.active-tab]="isActive('/loans')"
+    (click)="navigateTo('/loans')"
+  >
+    <ion-icon name="cash-outline" class="nav-icon"></ion-icon>
+    <span class="nav-label">Loans</span>
+  </ion-tab-button>
+</ion-tab-bar>

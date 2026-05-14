@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NavigationEnd, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader,IonIcon, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-=======
 import { CommonModule, DecimalPipe } from '@angular/common';
 import {
   IonHeader,
@@ -15,7 +13,7 @@ import {
   IonTabBar,
   IonTabButton,
 } from '@ionic/angular/standalone';
-//import { addIcons } from 'ionicons';
+import { addIcons } from 'ionicons';
 import {
   notificationsOutline,
   arrowDownOutline,
@@ -68,6 +66,7 @@ export interface Transaction {
   ],
 })
 export class DashboardPage implements OnInit {
+  currentPath = '/dashboard';
 
   // ── Wallet Data ──────────────────────────────────────────────────
   totalBalance  = 5_000_000;
@@ -108,7 +107,7 @@ export class DashboardPage implements OnInit {
     },
   ];
 
-  constructor() {
+  constructor(private router: Router) {
     // Register all icons used in this page
     addIcons({
       notificationsOutline,
@@ -128,6 +127,13 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentPath = this.router.url;
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentPath = event.urlAfterRedirects;
+      }
+    });
+
     // Compute totals dynamically from the transactions list if needed
     this.recalcTotals();
   }
@@ -160,5 +166,13 @@ export class DashboardPage implements OnInit {
   openScanner(): void {
     // Open QR code scanner
     console.log('Open QR scanner');
+  }
+
+  navigateTo(path: string): void {
+    this.router.navigate([path]);
+  }
+
+  isActive(path: string): boolean {
+    return this.currentPath === path;
   }
 }
