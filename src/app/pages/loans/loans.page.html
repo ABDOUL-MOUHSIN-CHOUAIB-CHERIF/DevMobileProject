@@ -1,13 +1,162 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>loans</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="header-toolbar">
+    <ion-avatar slot="start" class="user-avatar">
+      <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="Profile" />
+    </ion-avatar>
+    <ion-title class="brand-title">Sovereign Wealth</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" class="notification-btn">
+        <ion-icon name="notifications" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">loans</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="loans-content" [fullscreen]="true">
+
+  <div class="exposure-hero-card">
+    <p class="exposure-lbl">TOTAL CREDIT EXPOSURE</p>
+    <div class="exposure-main-row">
+      <!-- <h1 class="exposure-amount">${{{ totalCreditExposure | number:'1.2-2' }}}</h1> -->
+      <div class="exposure-badge">+4.2%</div>
+    </div>
+
+    <div class="exposure-split-subgrid">
+      <div class="subgrid-col line-right">
+        <span class="subgrid-lbl">Lent Out</span>
+        <!-- <span class="subgrid-val">${{{ lentOutAmount | number }}}</span> -->
+      </div>
+      <div class="subgrid-col">
+        <span class="subgrid-lbl">Borrowed</span>
+        <!-- <span class="subgrid-val">${{{ borrowedAmount | number }}}</span> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="action-rows-stack">
+    <div class="row-entry">
+      <div class="row-left">
+        <div class="action-circle-icon blue-icon">
+          <ion-icon name="add-outline"></ion-icon>
+        </div>
+        <div class="action-text-block">
+          <h3>New Credit Entry</h3>
+          <p>Add a new loan or borrowing contract</p>
+        </div>
+      </div>
+      <div class="action-circle-icon inline-blue-btn">
+        <ion-icon name="add-outline"></ion-icon>
+      </div>
+    </div>
+
+    <div class="row-entry">
+      <div class="row-left">
+        <div class="action-circle-icon green-icon">
+          <ion-icon name="person-add-outline"></ion-icon>
+        </div>
+        <div class="action-text-block">
+          <h3>Phone Contacts</h3>
+          <p>Select from your existing network</p>
+        </div>
+      </div>
+      <div class="contact-green-badge">
+        <ion-icon name="journal-outline" class="badge-inner-icon"></ion-icon>
+      </div>
+    </div>
+  </div>
+
+  <div class="segment-section-header">
+    <h2>Active Ledgers</h2>
+    <ion-segment [value]="filterSegment" (ionChange)="segmentChanged($event)" class="custom-capsule-segment">
+      <ion-segment-button value="all">
+        <ion-label>All</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="lent">
+        <ion-label>Lent</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="borrowed">
+        <ion-label>Borrowed</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <br>
+  <div class="ledgers-cards-container">
+    <div *ngFor="let item of ledgerItems" class="ledger-card-row" [ngClass]="item.statusClass">
+      
+      <div class="ledger-top-profile">
+        <div class="avatar-wrap">
+          <img *ngIf="item.avatar" [src]="item.avatar" alt="Avatar" />
+          <div *ngIf="item.initials" class="initials-fallback">{{ item.initials }}</div>
+        </div>
+        <div class="profile-name-sub">
+          <h3>{{ item.name }}</h3>
+          <p>{{ item.type }}</p>
+        </div>
+        <div class="status-pill-badge">{{ item.status }}</div>
+      </div>
+
+      <div class="ledger-pricing-middle">
+        <!-- <h2 class="amount-header">${{{ item.amount | number:'1.2-2' }}}</h2> -->
+        <p class="timeline-date-label">
+          <ion-icon name="calendar-outline" class="mini-cal-icon"></ion-icon>
+          {{ item.date }}
+        </p>
+      </div>
+
+      <div class="ledger-bottom-action" *ngIf="item.status === 'OVERDUE'">
+        <button class="action-execution-btn danger-action" (click)="sendReminder(item.name)">
+          <ion-icon name="volume-high-outline"></ion-icon>
+          <span>Send Reminder</span>
+        </button>
+      </div>
+      <br>
+      <div class="ledger-bottom-action" *ngIf="item.status === 'PENDING'">
+        <button class="action-execution-btn navy-action" (click)="payNow(item.name)">
+          <ion-icon name="wallet-outline"></ion-icon>
+          <span>Pay Now</span>
+        </button>
+      </div>
+
+      <div class="ledger-bottom-action" *ngIf="item.status === 'PAID'">
+        <button class="action-execution-btn transparent-outline-action" (click)="viewReceipt()">
+          <ion-icon name="receipt-outline"></ion-icon>
+          <span>View Receipt</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="amortization-card-panel">
+    <h3 class="amort-header-title">Quarterly Principal</h3>
+    <p class="amort-subtitle">Repayment schedule for Commercial Loan #8821-X</p>
+    
+    <div class="maturity-trigger-link">
+      <span>Next Maturity</span>
+      <ion-icon name="arrow-forward-outline"></ion-icon>
+    </div>
+
+    <div class="amort-grid-metrics">
+      <div class="metric-box">
+        <span class="box-lbl">CURRENT YIELD</span>
+        <span class="box-val green-yield">7.25%</span>
+      </div>
+      <div class="metric-box">
+        <span class="box-lbl">AMORTIZATION</span>
+        <span class="box-val">48 Mo.</span>
+      </div>
+    </div>
+
+    <div class="remaining-balance-bar">
+      <div class="balance-meta">
+        <span class="bal-title">REMAINING BALANCE</span>
+        <h2 class="bal-price">$74,200.00</h2>
+      </div>
+      <ion-icon name="business-outline" class="bank-icon-logo"></ion-icon>
+    </div>
+  </div>
+
+ 
+
 </ion-content>
+

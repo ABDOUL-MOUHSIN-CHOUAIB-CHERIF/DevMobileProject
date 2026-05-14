@@ -1,13 +1,122 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar class="header-toolbar">
+    <ion-title>
+      <div class="header-left">
+        <div class="avatar-wrap">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJotsNs3Oj_bVTC4N2h7c1NnjBW7-qaSMk1_q7uSD6moQpMBuSMpsHgv5qjZQogVUtUBLcXyl809Vk1GmzU_W3q1HvQYDjT4HEYinZa9FXyvzk9Sio3lKnZYYpMaTpi2dYkIi1deecijU98VSJjm0nNGhpX6Q5qGFf-4Xex23-bm_0nAOK8ZKDuV1QJ_a1eZCL1i1SQRWm6Hm0fOu7-VPEiG_DxizQ1NoC6FCwQwH47jKwXtVW_0Y67z1X3w-QUDDM7dSYl0WNYfc_" alt="Profile" class="avatar-img" />
+        </div>
+        <div>
+          <p class="brand-text">Sovereign Wealth</p>
+          <!-- now<p class="subtext">Private banking for your portfolio</p> -->
+        </div>
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" class="bell-btn">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="main-content" [fullscreen]="true">
+
+
+
+<ion-content class="profile-content" [fullscreen]="true">
+  <div class="profile-hero-section">
+    <div class="avatar-container">
+      <img [src]="user.avatar" onerror="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Profile Picture" class="profile-avatar" />
+      <div class="private-badge">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span>PRIVATE</span>
+      </div>
+    </div>
+    
+    <h1 class="profile-name">{{ user.name }}</h1>
+    <p class="profile-username">{{ user.username }}</p>
+    <div class="tier-chip">{{ user.tier }}</div>
+  </div>
+
+  <div class="section-container">
+    <h3 class="section-heading">Account Identity</h3>
+    <div class="identity-card">
+      <div class="info-group">
+        <label>FULL NAME</label>
+        <p>{{ user.name }}</p>
+      </div>
+      <div class="info-group">
+        <label>EMAIL ADDRESS</label>
+        <p>{{ user.email }}</p>
+      </div>
+      <div class="info-group last">
+        <label>MEMBER SINCE</label>
+        <p>{{ user.memberSince }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-container">
+    <h3 class="section-heading">Regional Preferences</h3>
+    <div class="preferences-list">
+      
+      <div class="pref-item">
+        <div class="pref-icon-box">
+          <ion-icon name="language-outline"></ion-icon>
+        </div>
+        <div class="pref-label-box">
+          <h4>Language</h4>
+          <p>English (US)</p>
+        </div>
+        <ion-segment [value]="language" (ionChange)="onLanguageChange($event)" class="lang-segment">
+          <ion-segment-button value="en">
+            <ion-label>EN</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="fr">
+            <ion-label>FR</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+    </div>
+  </div>
+
+ 
+
+  <div class="section-container">
+    <h3 class="section-heading">Security & Support</h3>
+    <div class="security-card">
+      <br>
+
+      <div class="security-item">
+        <ion-icon name="lock-closed-outline" class="sec-icon"></ion-icon>
+        <ion-label class="sec-label">Privacy Settings</ion-label>
+        <ion-icon name="chevron-forward" class="arrow-icon"></ion-icon>
+      </div>
+      <br>
+      <div class="security-item">
+        <ion-icon name="help-circle-outline" class="sec-icon"></ion-icon>
+        <ion-label class="sec-label">Help Center</ion-label>
+        <ion-icon name="chevron-forward" class="arrow-icon"></ion-icon>
+      </div>
+      <br>
+      <div class="security-item last">
+        <ion-icon name="document-text-outline" class="sec-icon"></ion-icon>
+        <ion-label class="sec-label">Terms of Service</ion-label>
+        <ion-icon name="open-outline" class="arrow-icon external-icon"></ion-icon>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="logout-container">
+    <button class="logout-btn" (click)="logout()">
+      <ion-icon name="log-out-outline"></ion-icon>
+      <span>Log Out</span>
+    </button>
+  </div>
+
+  <div class="version-footer">
+    VERSION {{ appVersion }}
+  </div>
 </ion-content>
+

@@ -1,0 +1,386 @@
+$primary-navy-blue: #0b1c8c;
+$bg-light-canvas: #f8f9fd;
+$text-slate-dark: #071250;
+$text-gray-muted: #5e688e;
+
+.loans-content {
+  --background: #{$bg-light-canvas};
+}
+
+// Global Nav Custom Header Element Toolbar Layout
+.header-toolbar {
+  --background: #ffffff;
+  --color: #{$text-slate-dark};
+  padding: 6px 16px;
+  
+  .user-avatar { width: 36px; height: 36px; }
+  .brand-title { font-size: 1.1rem; font-weight: 700; color: $primary-navy-blue; }
+  .notification-btn { --color: #{$text-gray-muted}; font-size: 1.35rem; }
+}
+
+// Hero Main Configuration Panel Matrix Box
+.exposure-hero-card {
+  background: linear-gradient(135deg, #0d197d, #050b40);
+  border-radius: 20px;
+  margin: 20px;
+  padding: 24px;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(11, 28, 140, 0.15);
+
+  .exposure-lbl {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.8px;
+    margin: 0 0 6px 0;
+  }
+
+  .exposure-main-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+
+    .exposure-amount { font-size: 2.1rem; font-weight: 800; margin: 0; }
+    
+    .exposure-badge {
+      background-color: #38ef7d;
+      color: #033c18;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+  }
+
+  .exposure-split-subgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    .subgrid-col {
+      display: flex;
+      flex-direction: column;
+      padding-left: 8px;
+
+      &.line-right { border-right: 1px solid rgba(255, 255, 255, 0.12); }
+    }
+
+    .subgrid-lbl { font-size: 0.78rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 4px; }
+    .subgrid-val { font-size: 1.3rem; font-weight: 700; }
+  }
+}
+
+// Actions rows options card layouts
+.action-rows-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 20px;
+  margin-bottom: 28px;
+
+  .row-entry {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.015);
+  }
+
+  .row-left { display: flex; align-items: center; gap: 14px; }
+
+  .action-circle-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+
+    &.blue-icon { background-color: #eef2ff; color: $primary-navy-blue; }
+    &.green-icon { background-color: #e6f7ee; color: #108548; }
+    &.inline-blue-btn { background-color: #0c1866; color: #ffffff; width: 32px; height: 32px; font-size: 1rem; }
+  }
+
+  .contact-green-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background-color: #108548;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
+
+  .action-text-block {
+    h3 { margin: 0 0 2px 0; font-size: 1rem; font-weight: 700; color: $text-slate-dark; }
+    p { margin: 0; font-size: 0.8rem; color: $text-gray-muted; }
+  }
+}
+
+// Segmentation Filter Bar Section Layout Group
+.segment-section-header {
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+
+  h2 { margin: 0; font-size: 1.3rem; font-weight: 800; color: $text-slate-dark; }
+
+  .custom-capsule-segment {
+    width: 180px;
+    background-color: #edf0f7;
+    border-radius: 12px;
+    padding: 2px;
+    height: 32px;
+
+    ion-segment-button {
+      --background-checked: #ffffff;
+      --color-checked: #{$text-slate-dark};
+      --color: #{$text-gray-muted};
+      --indicator-color: transparent;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin: 0;
+      min-height: auto;
+      height: 100%;
+      border-radius: 8px;
+    }
+  }
+}
+
+// Dynamic Ledgers Row Stack Structure Cards
+.ledgers-cards-container {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  .ledger-card-row {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.015);
+    border-left: 4px solid transparent;
+
+    &.status-overdue { border-left-color: #dc2626; .status-pill-badge { background-color: #fee2e2; color: #dc2626; } }
+    &.status-pending { border-left-color: #94a3b8; .status-pill-badge { background-color: #f1f5f9; color: #475569; } }
+    &.status-paid { border-left-color: #16a34a; .status-pill-badge { background-color: #d1fae5; color: #16a34a; } }
+  }
+
+  .ledger-top-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+
+    .avatar-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      overflow: hidden;
+      background-color: #e2e8f0;
+
+      img { width: 100%; height: 100%; object-fit: cover; }
+      
+      .initials-fallback {
+        width: 100%; height: 100%; display: flex; align-items: center;
+        justify-content: center; font-weight: 700; font-size: 0.85rem; color: #16a34a; background-color: #d1fae5;
+      }
+    }
+
+    .profile-name-sub {
+      flex: 1;
+      h3 { margin: 0 0 2px 0; font-size: 1.05rem; font-weight: 700; color: $text-slate-dark; }
+      p { margin: 0; font-size: 0.8rem; color: $text-gray-muted; font-weight: 500; }
+    }
+
+    .status-pill-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .ledger-pricing-middle {
+    margin-bottom: 18px;
+    .amount-header { font-size: 1.6rem; font-weight: 800; color: #0c175a; margin: 0 0 6px 0; letter-spacing: -0.5px; }
+    .timeline-date-label {
+      margin: 0; font-size: 0.82rem; font-weight: 600; color: #dc2626; display: flex; align-items: center; gap: 4px;
+      .mini-cal-icon { font-size: 0.95rem; }
+    }
+  }
+
+  .action-execution-btn {
+    width: 100%;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+
+    &.danger-action { background-color: #b91c1c; color: #ffffff; }
+    &.navy-action { background-color: #09124f; color: #ffffff; }
+    
+    &.transparent-outline-action {
+      background: none; border: 1px solid #e2e8f0; color: $text-slate-dark;
+      ion-icon { color: $text-gray-muted; }
+    }
+  }
+}
+
+// Maturity Timelines Core Panels
+.amortization-card-panel {
+  background-color: #ffffff;
+  border-radius: 20px;
+  margin: 0 20px 24px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+
+  .amort-header-title { font-size: 1.25rem; font-weight: 800; color: $text-slate-dark; margin: 0 0 4px 0; }
+  .amort-subtitle { font-size: 0.82rem; color: $text-gray-muted; margin: 0 0 20px 0; line-height: 1.4; }
+
+  .maturity-trigger-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: $primary-navy-blue;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    cursor: pointer;
+  }
+
+  .amort-grid-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+
+    .metric-box {
+      background-color: #f1f3f9;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .box-lbl { font-size: 0.68rem; font-weight: 700; color: $text-gray-muted; letter-spacing: 0.5px; }
+    .box-val { font-size: 1.15rem; font-weight: 700; color: $text-slate-dark; }
+    .green-yield { color: #16a34a; }
+  }
+
+  .remaining-balance-bar {
+    background: linear-gradient(135deg, #09114d, #050a30);
+    border-radius: 14px;
+    padding: 16px 20px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .bal-title { font-size: 0.68rem; font-weight: 700; color: rgba(255, 255, 255, 0.6); letter-spacing: 0.5px; }
+    .bal-price { margin: 4px 0 0 0; font-size: 1.4rem; font-weight: 800; }
+    .bank-icon-logo { font-size: 1.6rem; color: rgba(255, 255, 255, 0.3); }
+  }
+}
+
+// Scan Bridge Bottom Floating Banner Container
+.scan-bridge-banner-card {
+  background-color: #2e3192;
+  background: linear-gradient(135deg, #31359c, #1c1e69);
+  border-radius: 20px;
+  margin: 0 20px 100px;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+
+  .scanner-circle-frame {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+  }
+
+  h3 { margin: 0 0 6px 0; font-size: 1.2rem; font-weight: 700; }
+  .scan-card-description { margin: 0 0 20px 0; font-size: 0.85rem; color: rgba(255, 255, 255, 0.75); max-width: 85%; line-height: 1.4; }
+
+  .launch-camera-btn {
+    width: 100%;
+    height: 44px;
+    background-color: #3df389;
+    color: #033c18;
+    border-radius: 22px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+// Aligned Base Tab Menu Controllers Overrides
+.bottom-tab-bar {
+  --background: #ffffff;
+  --border-style: none;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -6px 20px rgba(0,0,0,0.03);
+  height: 64px;
+  position: relative;
+
+  ion-tab-button {
+    --color: #{$text-gray-muted};
+    --color-selected: #{$primary-navy-blue};
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    ion-icon { font-size: 1.35rem; margin-bottom: 2px; }
+    &.active-tab-item { --color: #{$primary-navy-blue}; }
+  }
+  .disabled-spacer-action { pointer-events: none; visibility: hidden; }
+}
+
+// Absolute Position Quick Target FAB Element Toggle
+.floating-center-fab-trigger {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 14px;
+  width: 52px;
+  height: 52px;
+  border-radius: 26px;
+  background-color: #0b1c8c;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 14px rgba(11, 28, 140, 0.35);
+  z-index: 10;
+  cursor: pointer;
+}

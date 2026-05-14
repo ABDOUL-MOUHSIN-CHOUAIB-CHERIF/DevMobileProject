@@ -51,7 +51,6 @@ export interface Transaction {
   imports: [
     CommonModule,
     DecimalPipe,
-    
     IonHeader,
     IonToolbar,
     IonTitle,
