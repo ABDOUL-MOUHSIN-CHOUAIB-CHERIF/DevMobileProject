@@ -7,46 +7,49 @@ import initSqlJs, { Database } from 'sql.js';
   providedIn: 'root'
 })
 export class DatabaseService {
+  private readonly dbName = 'etracker_db';
   private sqlite: SQLiteConnection = new SQLiteConnection(CapacitorSQLite);
-  private db!: SQLiteDBConnection;
+  private db?: SQLiteDBConnection;
   private webDb: Database | null = null; // For web platform
   private isDbReady: boolean = false;
 
-async initializeApp() {
+  private get isWebPlatform() {
+    return Capacitor.getPlatform() === 'web';
+  }
+
+  async initializeApp() {
     const platform = Capacitor.getPlatform();
     console.log('[DB] Platform detected:', platform);
 
-    if (platform === 'web') {
+    if (this.isWebPlatform) {
       try {
         console.log('[DB] Using sql.js for web platform...');
-        // Initialize sql.js
         const SQL = await initSqlJs({
           locateFile: (file: string) => `/assets/${file}`
         });
-        console.log('[DB] sql.js initialized ✅');
-        
-        // Create or load database
-        this.webDb = new SQL.Database();
+        console.log('[DB] sql.js initialized ');
+
+        this.webDb = await this.loadWebDb(SQL);
         this.isDbReady = true;
-        console.log('[DB] Web database created! 🚀');
-        
-        // Create your tables here
+        console.log('[DB] Web database loaded! ');
+
         await this.createSchema();
       } catch (err) {
         console.error('[DB] Web platform initialization failed:', err);
+        throw err;
       }
     } else {
-      // Native platform (Android)
       try {
         await customElements.whenDefined('jeep-sqlite');
-        this.db = await this.sqlite.createConnection('etracker_db', false, 'no-encryption', 1, false);
+        this.db = await this.sqlite.createConnection(this.dbName, false, 'no-encryption', 1, false);
         await this.db.open();
         this.isDbReady = true;
-        console.log('[DB] Native database connection open! 🚀');
-        
+        console.log('[DB] Native database connection open! ');
+
         await this.createSchema();
       } catch (err) {
         console.error('[DB] Native platform initialization failed:', err);
+        throw err;
       }
     }
   }
@@ -155,22 +158,124 @@ async initializeApp() {
       }
     } else {
       // For native, use Capacitor SQLite
+      if (!this.db) {
+        throw new Error('[DB] Native database is not initialized before schema creation');
+      }
       await this.db.execute(schema);
       console.log('[DB] Schema created ✅ (native)');
     }
   }
 
   private async ensureDbReady() {
-    if (!this.isDbReady || !this.db) {
-      await this.initializeApp();
+    if (this.isDbReady) {
+      return;
+    }
+
+    if (this.isWebPlatform && this.webDb) {
+      this.isDbReady = true;
+      return;
+    }
+
+    if (!this.isWebPlatform && this.db) {
+      this.isDbReady = true;
+      return;
+    }
+
+    await this.initializeApp();
+  }
+
+  private base64ToUint8Array(base64: string): Uint8Array {
+    const raw = atob(base64);
+    const buffer = new Uint8Array(raw.length);
+    for (let i = 0; i < raw.length; i++) {
+      buffer[i] = raw.charCodeAt(i);
+    }
+    return buffer;
+  }
+
+  private uint8ArrayToBase64(bytes: Uint8Array): string {
+    let binary = '';
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+  }
+
+  private async loadWebDb(SQL: any): Promise<Database> {
+    const saved = localStorage.getItem(this.dbName);
+    if (saved) {
+      try {
+        const bytes = this.base64ToUint8Array(saved);
+        return new SQL.Database(bytes);
+      } catch (err) {
+        console.warn('[DB] Stored web DB could not be loaded, creating a fresh database.', err);
+      }
+    }
+    return new SQL.Database();
+  }
+
+  private async persistWebDb() {
+    if (!this.isWebPlatform || !this.webDb) {
+      return;
+    }
+    const data = this.webDb.export();
+    localStorage.setItem(this.dbName, this.uint8ArrayToBase64(data));
+    console.log('[DB] Web database persisted to localStorage ✅');
+  }
+
+  private async webRun(sql: string, values?: any[]) {
+    if (!this.webDb) {
+      throw new Error('[DB] Web database is not initialized');
+    }
+    return this.webDb.run(sql, values || []);
+  }
+
+  private async webQuery(sql: string, values?: any[]) {
+    if (!this.webDb) {
+      throw new Error('[DB] Web database is not initialized');
+    }
+    const stmt = this.webDb.prepare(sql);
+    try {
+      if (values && values.length > 0) {
+        stmt.bind(values);
+      }
+      const rows: any[] = [];
+      while (stmt.step()) {
+        rows.push(stmt.getAsObject());
+      }
+      return rows;
+    } finally {
+      stmt.free();
     }
   }
 
-  // ── Save to web store after every write ──────────────────────────
-  private async saveWeb() {
-    if (Capacitor.getPlatform() === 'web') {
-      await this.sqlite.saveToStore('etracker_db');
+  private async runSql(sql: string, values?: any[]) {
+    if (this.isWebPlatform) {
+      const result = await this.webRun(sql, values);
+      await this.persistWebDb();
+      return result;
     }
+
+    if (!this.db) {
+      throw new Error('[DB] Native database is not initialized');
+    }
+    return this.db.run(sql, values);
+  }
+
+  private async querySql(sql: string, values?: any[]) {
+    if (this.isWebPlatform) {
+      return this.webQuery(sql, values);
+    }
+
+    if (!this.db) {
+      throw new Error('[DB] Native database is not initialized');
+    }
+    const result = await this.db.query(sql, values);
+    return result.values || [];
+  }
+
+  private async saveWeb() {
+    await this.persistWebDb();
   }
 
   // ── Users ────────────────────────────────────────────────────────
@@ -182,7 +287,7 @@ async initializeApp() {
       VALUES (?, ?, ?, ?, ?, ?);
     `;
     try {
-      const result = await this.db.run(sql, [
+      const result = await this.runSql(sql, [
         user.userId,
         user.email.toLowerCase(),
         user.password,
@@ -203,11 +308,11 @@ async initializeApp() {
   async getUserByEmail(email: string) {
     await this.ensureDbReady();
     try {
-      const result = await this.db.query(
+      const rows = await this.querySql(
         `SELECT * FROM users WHERE email = ? LIMIT 1;`,
         [email.toLowerCase()]
       );
-      return result.values && result.values.length > 0 ? result.values[0] : null;
+      return rows.length > 0 ? rows[0] : null;
     } catch (e) {
       console.error('Error fetching user:', e);
       return null;
@@ -223,7 +328,7 @@ async initializeApp() {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
     `;
     try {
-      const result = await this.db.run(sql, [
+      const result = await this.runSql(sql, [
         tx.txId, tx.userId, tx.type, tx.amount,
         tx.category, tx.description, tx.date,
         new Date().toISOString(), new Date().toISOString()
@@ -239,11 +344,10 @@ async initializeApp() {
   async getTransactions(userId: string) {
     await this.ensureDbReady();
     try {
-      const result = await this.db.query(
+      return await this.querySql(
         `SELECT * FROM transactions WHERE userId = ? ORDER BY date DESC;`,
         [userId]
       );
-      return result.values || [];
     } catch (e) {
       console.error('Error fetching transactions:', e);
       return [];
@@ -253,7 +357,7 @@ async initializeApp() {
   async deleteTransaction(txId: string) {
     await this.ensureDbReady();
     try {
-      await this.db.run(`DELETE FROM transactions WHERE txId = ?;`, [txId]);
+      await this.runSql(`DELETE FROM transactions WHERE txId = ?;`, [txId]);
       await this.saveWeb();
     } catch (e) {
       console.error('Error deleting transaction:', e);
@@ -270,7 +374,7 @@ async initializeApp() {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     `;
     try {
-      const result = await this.db.run(sql, [
+      const result = await this.runSql(sql, [
         goal.goalId, goal.userId, goal.name,
         goal.targetAmount, goal.currentAmount ?? 0,
         goal.deadline ?? null,
@@ -287,11 +391,10 @@ async initializeApp() {
   async getGoals(userId: string) {
     await this.ensureDbReady();
     try {
-      const result = await this.db.query(
+      return await this.querySql(
         `SELECT * FROM savings_goals WHERE userId = ? ORDER BY createdAt DESC;`,
         [userId]
       );
-      return result.values || [];
     } catch (e) {
       console.error('Error fetching goals:', e);
       return [];
@@ -308,7 +411,7 @@ async initializeApp() {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `;
     try {
-      const result = await this.db.run(sql, [
+      const result = await this.runSql(sql, [
         loan.loanId, loan.userId, loan.creditor, loan.creditorPhone ?? null,
         loan.principal, loan.interestRate ?? 0, loan.remainingBalance,
         loan.dueDate ?? null, loan.type, loan.status,
@@ -325,11 +428,10 @@ async initializeApp() {
   async getLoans(userId: string) {
     await this.ensureDbReady();
     try {
-      const result = await this.db.query(
+      return await this.querySql(
         `SELECT * FROM loans WHERE userId = ? ORDER BY createdAt DESC;`,
         [userId]
       );
-      return result.values || [];
     } catch (e) {
       console.error('Error fetching loans:', e);
       return [];
