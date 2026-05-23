@@ -4,11 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, 
-        IonButton,  IonTabBar,  IonTabButton,  IonIcon, IonCardHeader } from '@ionic/angular/standalone';
-
+        IonButton,  IonTabBar,  IonTabButton,  IonIcon } from '@ionic/angular/standalone';
 import {notificationsOutline,arrowDownOutline,arrowUpOutline,sparklesOutline,warningOutline,trendingUpOutline,bagOutline,restaurantOutline,
         cashOutline,home,barChartOutline,qrCodeOutline,trophyOutline,busOutline,helpCircleOutline } from 'ionicons/icons';
-
 import { DatabaseService } from '../../services/database';
 
 export interface Transaction {
@@ -27,17 +25,8 @@ export interface Transaction {
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonIcon,
-    IonCardHeader,
-    IonContent,
-    IonButtons,
-    IonButton,
-    IonTabBar,
+    CommonModule, FormsModule,IonHeader,IonToolbar,IonTitle,IonIcon,
+    IonContent, IonButtons, IonButton, IonTabBar,
     IonTabButton
   ],
 })
@@ -47,7 +36,7 @@ export class DashboardPage implements OnInit {
   userId: string = '';
 
   // ── Wallet Data ──
-  totalBalance = 0;
+  totalBalance = 0; 
   totalIncome = 0;
   totalExpenses = 0;
 
@@ -60,26 +49,15 @@ export class DashboardPage implements OnInit {
   ) {
     // Register all icons used in the dashboard
     addIcons({
-      notificationsOutline,
-      arrowDownOutline,
-      arrowUpOutline,
-      sparklesOutline,
-      warningOutline,
-      trendingUpOutline,
-      bagOutline,
-      restaurantOutline,
-      cashOutline,
-      home,
-      barChartOutline,
-      qrCodeOutline,
-      trophyOutline,
-      busOutline,
-      helpCircleOutline
+      notificationsOutline, arrowDownOutline, arrowUpOutline, sparklesOutline,
+      warningOutline,trendingUpOutline,bagOutline,restaurantOutline,
+      cashOutline, home, barChartOutline, qrCodeOutline, trophyOutline,
+      busOutline, helpCircleOutline
     });
   }
 
   async ngOnInit(): Promise<void> {
-    // 1. Check Authentication Session
+    //  Check Authentication Session
     const session = localStorage.getItem('active_user');
     if (!session) {
       this.router.navigate(['/login']);
@@ -90,7 +68,7 @@ export class DashboardPage implements OnInit {
     this.userName = user.name;
     this.userId = user.id;
 
-    // 2. Load Real Data from SQLite
+    // Load  Data from SQLite
     await this.loadDashboardData();
   }
 
@@ -148,18 +126,33 @@ export class DashboardPage implements OnInit {
     return categoryMap[cat.toLowerCase()] || 'help-circle-outline';
   }
 
-  // ── UI Actions ──
+  // footer actions
 
   viewAll(): void {
     this.router.navigate(['/transactions-history']);
   }
 
+  gotoAnalytics(): void {
+    this.router.navigate(['/analytics']);
+  }
+
+  gotoGoals(): void {
+    this.router.navigate(['/goals']);
+  }
+  gotoProfile(): void {
+    this.router.navigate(['/profile']);
+  }
+
+  gotoDashboard(): void {
+    this.router.navigate(['/dashboard'])
+  }
   openTransaction(tx: Transaction): void {
-    this.router.navigate(['/transaction'])
+    // this.router.navigate(['/transaction'])
     console.log('Viewing details for:', tx.name);
   }
 
   openScanner(): void {
+    this.router.navigate(['/transaction']);
     console.log('Initiating QR Scanner...');
   }
 

@@ -1,35 +1,47 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<ion-header class="ion-no-border">
-  <div class="custom-header">
-    <div class="header-brand">
-      <div class="header-avatar">SW</div>
-      <span>Sovereign Wealth</span>
-    </div>
-    <button class="bell-btn">
-      <ion-icon name="notifications-outline"></ion-icon>
-    </button>
-  </div>
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar class="header-toolbar">
+    <ion-title>
+      <div class="header-left">
+        <div class="avatar-wrap">
+          <ion-button (click)="gotoProfile()" fill="clear" class="avatar-btn">
+          <img
+            src="../../../assets/profile.png"
+            alt="Profile"
+            class="avatar-img"
+          />
+          </ion-button>
+        </div>
+       
+<span class="brand-text">Sovereign: {{ userName }}</span>
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" class="bell-btn">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <!-- PAGE TITLE -->
   <div class="page-title-block">
     <p class="page-eyebrow">Intelligence</p>
-    <h1 class="page-title">Analytics &<br></h1>
+    <h1 class="page-title">Analytics & Forecast<br></h1>
   </div>
 
   <!-- PERIOD TABS -->
   <div class="period-tabs">
-    @for (tab of tabs; track tab) {
-      <button 
-        class="period-tab" 
-        [class.active]="selectedTab === tab"
-        (click)="setTab(tab)">
-        {{ tab }}
-      </button>
-    }
+    <button 
+      class="period-tab" 
+      *ngFor="let tab of tabs; trackBy: trackByTab"
+      [class.active]="selectedTab === tab"
+      (click)="setTab(tab)">
+      {{ tab }}
+    </button>
   </div>
 
   <!-- NET BALANCE PROJECTION -->
@@ -93,25 +105,6 @@
     </div>
   </div>
 
-  <!-- EFFICIENCY INDEX -->
-  <div class="card">
-    <div class="eff-header">
-      <span class="eff-title">Efficiency Index</span>
-      <div class="eff-legend">
-        <div class="eff-leg-item">
-          <div class="eff-dot spend"></div>
-          SPEND
-        </div>
-        <div class="eff-leg-item">
-          <div class="eff-dot save"></div>
-          SAVE
-        </div>
-      </div>
-    </div>
-    <div class="bar-chart-wrap">
-      <canvas #barChart></canvas>
-    </div>
-  </div>
 
   <!-- SMART ANALYSIS BANNER -->
   <div class="smart-banner">
@@ -125,47 +118,40 @@
     <div class="smart-body">
       By reducing 'Lifestyle' expenses by just 8% next week, you can achieve your 'New Home' goal 14 days earlier.
     </div>
-    <button class="smart-btn">Optimize My Budget</button>
+    <button class="smart-btn" (click)="optimizeBudget()">Optimize My Budget</button>
   </div>
 
-  <!-- TREND VELOCITY -->
-  <div class="section-header">
-    <span class="section-title">Trend Velocity</span>
-    <span class="full-report">Full Report →</span>
-  </div>
 
-  <div class="trend-card">
-    <div class="trend-icon recurring">
-      <ion-icon name="repeat-outline"></ion-icon>
-    </div>
-    <div class="trend-info">
-      <div class="trend-eyebrow">Recurring</div>
-      <div class="trend-amount negative">−$2,150.00</div>
-      <div class="trend-change">Decreased 4.2%</div>
-    </div>
-  </div>
-
-  <div class="trend-card">
-    <div class="trend-icon inflow">
-      <ion-icon name="arrow-down-outline"></ion-icon>
-    </div>
-    <div class="trend-info">
-      <div class="trend-eyebrow">Net Inflow</div>
-      <div class="trend-amount positive">+$8,940.00</div>
-      <div class="trend-change">Increased 18%</div>
-    </div>
-  </div>
-
-  <div class="trend-card last">
-    <div class="trend-icon outlier">
-      <ion-icon name="warning-outline"></ion-icon>
-    </div>
-    <div class="trend-info">
-      <div class="trend-eyebrow">Outliers</div>
-      <div class="trend-amount">3 High Spends</div>
-      <div class="trend-change review-needed">Needs Review</div>
-    </div>
-  </div>
-
-  <div class="spacer-bottom"></div>
 </ion-content>
+
+
+<!-- Bottom Navigation -->
+<ion-tab-bar class="bottom-nav">
+  <ion-tab-button class="nav-tab  active-tab" (click)="gotoDashboard()" tab="home">
+    <ion-icon name="home" class="nav-icon"></ion-icon>
+    <span class="nav-label">Home</span>
+  </ion-tab-button>
+
+  <ion-tab-button class="nav-tab" (click)="gotoAnalytics()" tab="analytics">
+    <ion-icon name="bar-chart-outline" class="nav-icon"></ion-icon>
+    <span class="nav-label">Analytics</span>
+  </ion-tab-button>
+
+  <!-- Center FAB -->
+  <div class="fab-slot">
+     <ion-tab-button class="nav-tab" (click)="openScanner()" tab="analytics">
+        <ion-icon name="cash-outline" class="nav-icon"></ion-icon>
+        <span class="nav-label">Transaction</span>
+      </ion-tab-button>
+  </div>
+
+  <ion-tab-button class="nav-tab" (click)="gotoGoals()" tab="goals">
+    <ion-icon name="trophy-outline" class="nav-icon"></ion-icon>
+    <span class="nav-label">Goals</span>
+  </ion-tab-button>
+
+  <ion-tab-button class="nav-tab" tab="loans">
+    <ion-icon name="cash-outline" class="nav-icon"></ion-icon>
+    <span class="nav-label">Loans</span>
+  </ion-tab-button>
+</ion-tab-bar>

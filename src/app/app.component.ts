@@ -38,6 +38,7 @@ import {
   trashOutline,
   createOutline,
   personOutline,
+  airplaneOutline
  
 } from 'ionicons/icons';
 import { DatabaseService } from './services/database';
@@ -89,7 +90,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       'create-outline': createOutline,
       'person-outline': personOutline,
       'arrow-down-outline' : arrowDownOutline,
-      'arrow-up-outline': arrowUpOutline
+      'arrow-up-outline': arrowUpOutline,
+      'airplane-outline': airplaneOutline
     });
   }
 

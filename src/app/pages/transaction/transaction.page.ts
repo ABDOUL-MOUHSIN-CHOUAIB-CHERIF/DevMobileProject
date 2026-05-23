@@ -106,7 +106,7 @@ export class TransactionPage implements OnInit {
 
   async showToast(message: string, color: string) {
     const toast = await this.toastCtrl.create({
-      message, duration: 2000, color, position: 'bottom'
+      message, duration: 2000, color, position: 'top'
     });
     await toast.present();
   }

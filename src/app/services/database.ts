@@ -53,7 +53,54 @@ export class DatabaseService {
       }
     }
   }
+
+  // ✅ FIX: Added safety guard check to prevent 'object is possibly null'
+  async executeQuery(sql: string, params: any[] = []): Promise<any> {
+    await this.ensureDbReady();
+
+    if (this.isWebPlatform) {
+      if (!this.webDb) throw new Error('[DB] Web database engine not ready.');
+      // Add this just above line 63 in database.ts
+      console.log("DEBUG SQL:", sql);
+      console.log("DEBUG PARAMS LENGTH:", params.length);
+      console.log("DEBUG PARAMS DATA:", params);
+      const result = this.webDb.run(sql, params);
+      await this.persistWebDb(); // Ensure change is saved to local storage
+      return result;
+    } else {
+      if (!this.db) throw new Error('[DB] Native database connection not ready.');
+      return await this.db.run(sql, params);
+    }
+  }
+
+  //  FIX: Added safety guard check to clean table rows translation formats
+  async selectQuery(sql: string, params: any[] = []): Promise<any[]> {
+    await this.ensureDbReady();
+
+    if (this.isWebPlatform) {
+      if (!this.webDb) throw new Error('[DB] Web database engine not ready.');
+      const res = this.webDb.exec(sql, params);
+      if (res.length === 0) return [];
+      
+      const columns = res[0].columns;
+      const values = res[0].values;
+      
+      return values.map((row: any) => {
+        const obj: any = {};
+        columns.forEach((col: string, i: number) => {
+          obj[col] = row[i];
+        });
+        return obj;
+      });
+    } else {
+      if (!this.db) throw new Error('[DB] Native database connection not ready.');
+      const res = await this.db.query(sql, params);
+      return res.values || [];
+    }
+  }
+
   private async createSchema() {
+    // ✅ SYNC FIX: Renamed table to match 'goals' so it doesn't break goals.page.ts queries!
     const schema = `
       CREATE TABLE IF NOT EXISTS users (
         userId    TEXT PRIMARY KEY,
@@ -77,16 +124,16 @@ export class DatabaseService {
         FOREIGN KEY (userId) REFERENCES users(userId) ON DELETE CASCADE
       );
 
-      CREATE TABLE IF NOT EXISTS savings_goals (
-        goalId        TEXT PRIMARY KEY,
-        userId        TEXT NOT NULL,
-        name          TEXT NOT NULL,
-        targetAmount  REAL NOT NULL,
-        currentAmount REAL DEFAULT 0,
-        deadline      TEXT,
-        createdAt     TEXT NOT NULL,
-        updatedAt     TEXT NOT NULL,
-        FOREIGN KEY (userId) REFERENCES users(userId) ON DELETE CASCADE
+      CREATE TABLE IF NOT EXISTS saving_goals (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        userId TEXT,
+        title TEXT,
+        category TEXT,
+        currentAmount REAL,
+        targetAmount REAL,
+        icon TEXT,
+        colorClass TEXT,
+        dueDate TEXT
       );
 
       CREATE TABLE IF NOT EXISTS contributions (
@@ -94,7 +141,7 @@ export class DatabaseService {
         goalId         TEXT NOT NULL,
         amount         REAL NOT NULL,
         date           TEXT NOT NULL,
-        FOREIGN KEY (goalId) REFERENCES savings_goals(goalId) ON DELETE CASCADE
+        FOREIGN KEY (goalId) REFERENCES goals(id) ON DELETE CASCADE
       );
 
       CREATE TABLE IF NOT EXISTS loans (
@@ -145,9 +192,7 @@ export class DatabaseService {
       );
     `;
     
-    const platform = Capacitor.getPlatform();
-    if (platform === 'web') {
-      // For web, use sql.js
+    if (this.isWebPlatform) {
       if (this.webDb) {
         try {
           this.webDb.run(schema);
@@ -157,7 +202,6 @@ export class DatabaseService {
         }
       }
     } else {
-      // For native, use Capacitor SQLite
       if (!this.db) {
         throw new Error('[DB] Native database is not initialized before schema creation');
       }
@@ -223,55 +267,21 @@ export class DatabaseService {
     console.log('[DB] Web database persisted to localStorage ✅');
   }
 
+  // ✅ FIX: Wired these internal methods to route safely through executeQuery/selectQuery wrappers
   private async webRun(sql: string, values?: any[]) {
-    if (!this.webDb) {
-      throw new Error('[DB] Web database is not initialized');
-    }
-    return this.webDb.run(sql, values || []);
+    return this.executeQuery(sql, values || []);
   }
 
   private async webQuery(sql: string, values?: any[]) {
-    if (!this.webDb) {
-      throw new Error('[DB] Web database is not initialized');
-    }
-    const stmt = this.webDb.prepare(sql);
-    try {
-      if (values && values.length > 0) {
-        stmt.bind(values);
-      }
-      const rows: any[] = [];
-      while (stmt.step()) {
-        rows.push(stmt.getAsObject());
-      }
-      return rows;
-    } finally {
-      stmt.free();
-    }
+    return this.selectQuery(sql, values || []);
   }
 
   private async runSql(sql: string, values?: any[]) {
-    if (this.isWebPlatform) {
-      const result = await this.webRun(sql, values);
-      await this.persistWebDb();
-      return result;
-    }
-
-    if (!this.db) {
-      throw new Error('[DB] Native database is not initialized');
-    }
-    return this.db.run(sql, values);
+    return this.executeQuery(sql, values || []);
   }
 
   private async querySql(sql: string, values?: any[]) {
-    if (this.isWebPlatform) {
-      return this.webQuery(sql, values);
-    }
-
-    if (!this.db) {
-      throw new Error('[DB] Native database is not initialized');
-    }
-    const result = await this.db.query(sql, values);
-    return result.values || [];
+    return this.selectQuery(sql, values || []);
   }
 
   private async saveWeb() {
@@ -281,7 +291,6 @@ export class DatabaseService {
   // ── Users ────────────────────────────────────────────────────────
 
   async addUser(user: any) {
-    await this.ensureDbReady();
     const sql = `
       INSERT INTO users (userId, email, password, name, createdAt, updatedAt)
       VALUES (?, ?, ?, ?, ?, ?);
@@ -295,7 +304,6 @@ export class DatabaseService {
         user.createdAt,
         user.updatedAt
       ]);
-      await this.saveWeb();
       return result;
     } catch (e: any) {
       if (e?.message?.includes('UNIQUE')) {
@@ -306,7 +314,6 @@ export class DatabaseService {
   }
 
   async getUserByEmail(email: string) {
-    await this.ensureDbReady();
     try {
       const rows = await this.querySql(
         `SELECT * FROM users WHERE email = ? LIMIT 1;`,
@@ -322,7 +329,6 @@ export class DatabaseService {
   // ── Transactions ─────────────────────────────────────────────────
 
   async addTransaction(tx: any) {
-    await this.ensureDbReady();
     const sql = `
       INSERT INTO transactions (txId, userId, type, amount, category, description, date, createdAt, updatedAt)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
@@ -333,7 +339,6 @@ export class DatabaseService {
         tx.category, tx.description, tx.date,
         new Date().toISOString(), new Date().toISOString()
       ]);
-      await this.saveWeb();
       return result;
     } catch (e) {
       console.error('Error saving transaction:', e);
@@ -342,7 +347,6 @@ export class DatabaseService {
   }
 
   async getTransactions(userId: string) {
-    await this.ensureDbReady();
     try {
       return await this.querySql(
         `SELECT * FROM transactions WHERE userId = ? ORDER BY date DESC;`,
@@ -355,10 +359,8 @@ export class DatabaseService {
   }
 
   async deleteTransaction(txId: string) {
-    await this.ensureDbReady();
     try {
       await this.runSql(`DELETE FROM transactions WHERE txId = ?;`, [txId]);
-      await this.saveWeb();
     } catch (e) {
       console.error('Error deleting transaction:', e);
       throw e;
@@ -368,19 +370,16 @@ export class DatabaseService {
   // ── Savings Goals ─────────────────────────────────────────────────
 
   async addGoal(goal: any) {
-    await this.ensureDbReady();
     const sql = `
-      INSERT INTO savings_goals (goalId, userId, name, targetAmount, currentAmount, deadline, createdAt, updatedAt)
+      INSERT INTO goals (userId, title, category, currentAmount, targetAmount, icon, colorClass, dueDate)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     `;
     try {
       const result = await this.runSql(sql, [
-        goal.goalId, goal.userId, goal.name,
-        goal.targetAmount, goal.currentAmount ?? 0,
-        goal.deadline ?? null,
-        new Date().toISOString(), new Date().toISOString()
+        goal.userId, goal.title, goal.category,
+        goal.currentAmount ?? 0, goal.targetAmount,
+        goal.icon, goal.colorClass, goal.dueDate ?? null
       ]);
-      await this.saveWeb();
       return result;
     } catch (e) {
       console.error('Error adding goal:', e);
@@ -389,10 +388,9 @@ export class DatabaseService {
   }
 
   async getGoals(userId: string) {
-    await this.ensureDbReady();
     try {
       return await this.querySql(
-        `SELECT * FROM savings_goals WHERE userId = ? ORDER BY createdAt DESC;`,
+        `SELECT * FROM goals WHERE userId = ? ORDER BY id DESC;`,
         [userId]
       );
     } catch (e) {
@@ -404,7 +402,6 @@ export class DatabaseService {
   // ── Loans ─────────────────────────────────────────────────────────
 
   async addLoan(loan: any) {
-    await this.ensureDbReady();
     const sql = `
       INSERT INTO loans (loanId, userId, creditor, creditorPhone, principal, interestRate,
                          remainingBalance, dueDate, type, status, createdAt, updatedAt)
@@ -417,7 +414,6 @@ export class DatabaseService {
         loan.dueDate ?? null, loan.type, loan.status,
         new Date().toISOString(), new Date().toISOString()
       ]);
-      await this.saveWeb();
       return result;
     } catch (e) {
       console.error('Error adding loan:', e);
@@ -426,7 +422,6 @@ export class DatabaseService {
   }
 
   async getLoans(userId: string) {
-    await this.ensureDbReady();
     try {
       return await this.querySql(
         `SELECT * FROM loans WHERE userId = ? ORDER BY createdAt DESC;`,

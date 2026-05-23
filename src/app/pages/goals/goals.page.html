@@ -1,0 +1,193 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar class="header-toolbar">
+    <ion-title>
+      <div class="header-left">
+        <div class="avatar-wrap">
+          <ion-button (click)="gotoProfile()" fill="clear" class="avatar-btn">
+            <img
+              src="../../../assets/profile.png"
+              alt="Profile"
+              class="avatar-img"
+            />
+          </ion-button>
+        </div>
+        <span class="brand-text">Sovereign: {{ userName }}</span>
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" class="bell-btn">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="main-container">
+    
+    <header class="hero-card">
+      <div class="hero-content">
+        <p class="label">TOTAL ASSETS LOCKED</p>
+        <h2 class="amount">{{ totalAssets | currency:'USD' }}</h2>
+        <div class="trend-badge">
+          <ion-icon name="trending-up"></ion-icon>
+          <span>+2.4%</span>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <button id="open-new-goal-modal" class="btn-new">
+          <ion-icon name="add-circle"></ion-icon> New Goal
+        </button>
+      </div>
+    </header>
+
+    <section class="ai-banner">
+      <div class="ai-icon">
+        <ion-icon name="psychology-outline"></ion-icon>
+      </div>
+      <div class="ai-text">
+        <h3>Smart Savings Advice</h3>
+        <p>Save 15% of your salary to reach your target savings goals early.</p>
+        <button class="ai-link">EXECUTE RECOMMENDATION <ion-icon name="arrow-forward"></ion-icon></button>
+      </div>
+    </section>
+
+    <div class="section-header">
+      <h3>Active Goals</h3>
+    </div>
+
+    <div class="bento-grid">
+      <div class="empty-state-card" *ngIf="goals.length === 0">
+        <ion-icon name="ribbon-outline"></ion-icon>
+        <p>No active savings metrics tracked yet. Create a goal to begin.</p>
+      </div>
+
+      <div class="goal-card" 
+           *ngFor="let goal of goals" 
+           [ngClass]="goal.colorClass"
+           >
+        
+        <div class="card-top">
+          <div class="icon-box">
+            <ion-icon [name]="goal.icon"></ion-icon>
+          </div>
+          <span class="cat-tag">{{ goal.category }}</span>
+        </div>
+
+        <div class="card-bottom">
+          <h4>{{ goal.title }}</h4>
+          
+          <div class="progress-info">
+            <span>Progress</span>
+            <span class="stats">{{ goal.currentAmount | currency:'USD':'symbol':'1.0-0' }} / {{ goal.targetAmount | currency:'USD':'symbol':'1.0-0' }}</span>
+          </div>
+          
+          <div class="progress-bar">
+            <div class="fill" [style.width.%]="getProgress(goal)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<ion-tab-bar class="bottom-nav">
+  <ion-tab-button class="nav-tab" (click)="gotoDashboard()" tab="home">
+    <ion-icon name="home-outline" class="nav-icon"></ion-icon>
+    <span class="nav-label">Home</span>
+  </ion-tab-button>
+
+  <ion-tab-button class="nav-tab" (click)="gotoAnalytics()" tab="analytics">
+    <ion-icon name="bar-chart-outline" class="nav-icon"></ion-icon>
+    <span class="nav-label">Analytics</span>
+  </ion-tab-button>
+
+  <div class="fab-slot">
+    <ion-tab-button class="nav-tab" (click)="openScanner()" tab="transaction">
+      <ion-icon name="qr-code-scanner-outline" class="nav-icon"></ion-icon>
+      <span class="nav-label">Scan</span>
+    </ion-tab-button>
+  </div>
+
+  <ion-tab-button class="nav-tab active-tab" (click)="gotoGoals()" tab="goals">
+    <ion-icon name="trophy" class="nav-icon"></ion-icon>
+    <span class="nav-label">Goals</span>
+  </ion-tab-button>
+
+  <ion-tab-button class="nav-tab" tab="loans">
+    <ion-icon name="cash-outline" class="nav-icon"></ion-icon>
+    <span class="nav-label">Loans</span>
+  </ion-tab-button>
+</ion-tab-bar>
+
+<ion-modal #goalModal trigger="open-new-goal-modal" [initialBreakpoint]="0.75" [breakpoints]="[0, 0.5, 0.75, 0.9]">
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar>
+        <ion-title>Create New Goal</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()">Cancel</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding modal-content">
+      <div class="form-container">
+        
+        <div class="input-group">
+          <label>Goal Name</label>
+          <ion-input type="text" fill="outline" placeholder="e.g. New Sports Car" [(ngModel)]="newGoal.title"></ion-input>
+        </div>
+
+        <div class="input-group">
+          <label>Category</label>
+          <ion-select label-placement="floating" fill="outline" placeholder="Select Category" [(ngModel)]="newGoal.category">
+            <ion-select-option value="Travel">Travel</ion-select-option>
+            <ion-select-option value="Security">Security</ion-select-option>
+            <ion-select-option value="Property">Property</ion-select-option>
+            <ion-select-option value="Leisure">Leisure</ion-select-option>
+          </ion-select>
+        </div>
+
+        <div class="input-group">
+          <label>Targeted Amount ($)</label>
+          <ion-input type="number" fill="outline" placeholder="e.g. 5000" [(ngModel)]="newGoal.targetAmount"></ion-input>
+        </div>
+
+        <div class="input-group">
+  <label>Due Date</label>
+  
+  <ion-button id="date-trigger" fill="outline" expand="block" class="date-select-btn">
+    {{ newGoal.dueDate ? (newGoal.dueDate | date:'mediumDate') : 'Pick a Date' }}
+    <ion-icon slot="end" name="calendar-outline"></ion-icon>
+  </ion-button>
+
+  <ion-modal trigger="date-trigger" class="calendar-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Select Due Date</ion-title>
+          <ion-buttons slot="end">
+            <ion-button >Done</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-datetime 
+          presentation="date" 
+          [(ngModel)]="newGoal.dueDate" 
+          showDefaultButtons="false">
+        </ion-datetime>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</div>
+
+        <button class="btn-save" (click)="saveGoal()">
+          Create Goal
+        </button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

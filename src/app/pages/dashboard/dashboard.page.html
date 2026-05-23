@@ -3,11 +3,13 @@
     <ion-title>
       <div class="header-left">
         <div class="avatar-wrap">
+          <ion-button (click)="gotoProfile()" fill="clear" class="avatar-btn">
           <img
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJotsNs3Oj_bVTC4N2h7c1NnjBW7-qaSMk1_q7uSD6moQpMBuSMpsHgv5qjZQogVUtUBLcXyl809Vk1GmzU_W3q1HvQYDjT4HEYinZa9FXyvzk9Sio3lKnZYYpMaTpi2dYkIi1deecijU98VSJjm0nNGhpX6Q5qGFf-4Xex23-bm_0nAOK8ZKDuV1QJ_a1eZCL1i1SQRWm6Hm0fOu7-VPEiG_DxizQ1NoC6FCwQwH47jKwXtVW_0Y67z1X3w-QUDDM7dSYl0WNYfc_"
+            src="../../../assets/profile.png"
             alt="Profile"
             class="avatar-img"
           />
+          </ion-button>
         </div>
        
 <span class="brand-text">Sovereign: {{ userName }}</span>
@@ -107,24 +109,25 @@
 
 <!-- Bottom Navigation -->
 <ion-tab-bar class="bottom-nav">
-  <ion-tab-button class="nav-tab active-tab" tab="home">
+  <ion-tab-button class="nav-tab  active-tab" (click)="gotoDashboard()" tab="home">
     <ion-icon name="home" class="nav-icon"></ion-icon>
     <span class="nav-label">Home</span>
   </ion-tab-button>
 
-  <ion-tab-button class="nav-tab" tab="analytics">
+  <ion-tab-button class="nav-tab" (click)="gotoAnalytics()" tab="analytics">
     <ion-icon name="bar-chart-outline" class="nav-icon"></ion-icon>
     <span class="nav-label">Analytics</span>
   </ion-tab-button>
 
   <!-- Center FAB -->
   <div class="fab-slot">
-    <button class="fab-btn" (click)="openScanner()">
-      <ion-icon name="qr-code-outline" class="fab-icon"></ion-icon>
-    </button>
+     <ion-tab-button class="nav-tab" (click)="openScanner()" tab="analytics">
+        <ion-icon name="cash-outline" class="nav-icon"></ion-icon>
+        <span class="nav-label">Transaction</span>
+      </ion-tab-button>
   </div>
 
-  <ion-tab-button class="nav-tab" tab="goals">
+  <ion-tab-button class="nav-tab" (click)="gotoGoals()" tab="goals">
     <ion-icon name="trophy-outline" class="nav-icon"></ion-icon>
     <span class="nav-label">Goals</span>
   </ion-tab-button>
